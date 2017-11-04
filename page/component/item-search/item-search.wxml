@@ -1,0 +1,41 @@
+<!--page/component/item-search/item-search.wxml-->
+<view class='container'>
+  <!-- list -->
+    <view class='list'>
+        <view class='item' wx:for="{{items}}" wx:key="id" wx:for-item="item">
+          <view class='flex main line-after'>
+            <view class='flex-row img left'>
+              <image src="{{item.url}}"></image>
+            </view>
+            <view class='flex-row right'>
+              <view class='name'>{{item.name}}</view>
+              <view class='bottom'>
+                <view class='row'>{{item.quantityUnitName}}</view>
+                <view class='row'>库存：<text>{{item.quantity}}</text></view>
+              </view>
+            </view>
+          </view>
+          <view class='btns'>
+            <view data-item-id="{{item.id}}" data-item-name="{{item.name}}" data-index="{{index}}" bindtap='online' wx:if="{{item.status == null || item.status == 'SIS03' || (item.status == 'SIS02' && item.online != true)}}">上架</view>
+            <view data-item-id="{{item.id}}" data-item-name="{{item.name}}"  data-index="{{index}}" bindtap='offline' wx:if="{{item.online == true}}">下架</view>
+            <view data-item-id="{{item.id}}" data-item-name="{{item.name}}" data-index="{{index}}" data-quantity="{{item.quantity}}" bindtap='showModal' wx:if="{{item.online == true}}">库存</view>
+            <view data-item-id="{{item.id}}" data-item-name="{{item.name}}"  data-index="{{index}}" bindtap='del' wx:if="{{item.online == false && item.status == 'SIS02'}}">删除</view>
+            <view class="gray" wx:if="{{item.status == 'SIS01'}}">审核中</view>
+          </view>
+        </view>
+    </view>
+  
+</view>
+
+<view class="commodity_screen" bindtap="hideModal" wx:if="{{showModalStatus}}"></view>
+<view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
+  <form bindsubmit="register">
+    <view class='form-group line-after'>
+      <input type="number" value="{{quantity}}" focus="true" maxlength="8" class='form-control' placeholder='请输入库存' bindinput="setQuantity"></input>
+    </view>
+    <view class="btn-reg">
+      <button type="yellow" plain="true" disabled="{{confirmBtn.disabled}}"  loading="{{confirmBtn.loading}}" bindtap='updateQuantity'>确认</button>
+      <button bindtap='cancel' class="cancel">取消</button>
+    </view>
+  </form>
+</view>

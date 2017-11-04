@@ -1,0 +1,42 @@
+<!--page/component/balance/balance.wxml-->
+<view class='container'>
+  <view class='header'>
+    <view>
+      <image src='/image/money.png'></image>
+    </view>
+    <view class='moeny'>￥{{balanceAmount}}</view>
+    <view class='btns'>
+      <navigator class='flex-row cash' url="/page/component/balance-cash/balance-cash">
+        提现
+      </navigator>    
+    </view>
+  </view>
+
+  <navigator class='flex log' url="/page/component/balance-log-list/balance-log-list">
+    <view class='flex-row lf'>
+      收支明细               
+    </view>
+    <view class='flex-row img rg'>
+      <image src='/image/right.png'></image>
+    </view>
+  </navigator>
+
+  <navigator class='flex log cashlog' url="/page/component/balance-cash-list/balance-cash-list">
+    <view class='flex-row lf'>
+      提现记录               
+    </view>
+    <view class='flex-row img rg'>
+      <image src='/image/right.png'></image>
+    </view>
+  </navigator>
+
+  <view class='btns flex'>
+    <navigator class='flex-row' url="/page/component/balance-roll/balance-roll?type=in">
+      转入
+    </navigator>
+    <navigator class='flex-row' url="/page/component/balance-roll/balance-roll?type=out">
+      转出
+    </navigator>    
+  </view>
+
+</view>

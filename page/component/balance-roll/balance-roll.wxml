@@ -1,0 +1,63 @@
+<!--page/component/balance-roll/balance-roll.wxml-->
+<view class='container'>
+  <view class='tab flex'> 
+    <view class="flex-row {{currentTab=='in' ? 'active' : ''}}" data-current="in" bindtap="switchTab">转入到派单钱包</view>
+    <view class="flex-row {{currentTab=='out' ? 'active' : ''}}" data-current="out" bindtap="switchTab">转出到采购钱包</view>
+  </view>
+
+  <view class='money flex'>
+    <view class='flex-row title'>金额</view>
+    <view class='flex-row input'>
+      <input value="{{amount}}" maxlength='8' type="digit" placeholder='请输入' bindinput="setAmount"></input>
+    </view>
+  </view>  
+
+  <view class='flex label'>
+    <view class='flex-row lf'>
+      <block wx:if="{{currentTab=='in'}}">
+          采购金额：<text>￥{{purchase.amountByY}}</text>  
+      </block>
+      <block wx:else>
+          派单金额：<text>￥{{deliver.amountByY}}</text>  
+      </block>
+    </view>
+    <view class='flex-row rg' bindtap='rollAll'>
+      <block wx:if="{{currentTab=='in'}}">
+          全部转入
+      </block>
+      <block wx:else>
+          全部转出
+      </block>
+    </view>
+  </view>
+
+  <view class='btns'>
+    <button type="yellow" bindtap="showModal" disabled="{{rollBtn.disabled}}">
+      <block wx:if="{{currentTab=='in'}}">
+          转入
+      </block>
+      <block wx:else>
+          转出
+      </block>
+    </button>
+  </view>
+
+</view>
+
+<view class="commodity_screen" bindtap="hideModal" wx:if="{{showModalStatus}}"></view>
+<view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
+  <form bindsubmit="register">
+    <view class='form-group line-after flex'>
+      <view class='flex-row'>
+        <input type="number" maxlength="6" class='form-control' placeholder='请输入验证码' bindinput="setVcode"></input>
+      </view>
+      <view class='flex-row flex flex-align-center'>
+        <button size='mini' disabled="{{vcodeBtn.disabled}}" catchtap="getVCode">{{vcodeBtn.msg}}</button>
+      </view>
+    </view>
+    <view class="btn-reg">
+      <button type="yellow" plain="true" disabled="{{confirmBtn.disabled}}"  loading="{{confirmBtn.loading}}" bindtap='transform'>确认</button>
+      <button bindtap='cancel' class="cancel">取消</button>
+    </view>
+  </form>
+</view>

@@ -1,0 +1,130 @@
+/* page/component/item-search/item-search.wxss */
+@import '../../common/common.wxss';
+
+.list .item{
+  margin-bottom: 10px;
+  background-color: #fff;
+}
+
+.list .item .main{
+  position: relative;
+  padding: 24rpx;
+}
+
+.list .item .main .left{
+   max-width: 160rpx;
+   min-width: 160rpx;
+   height: 160rpx;
+}
+
+.list .item .main .right{
+  position: relative;
+  height: 160rpx;
+  margin-left: 20rpx;
+  padding-top: 20rpx;
+}
+
+.list .item .main .right .name{
+   overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 40rpx;
+  max-height: 80rpx;
+  font-size: 28rpx;
+}
+
+.list .item .main .right .bottom{
+  position: absolute;
+  left: 0;
+  bottom: 20rpx;
+  width: 100%;
+}
+
+.list .item .main .right .bottom .row{
+  float: left;
+  height: 32rpx;
+  line-height: 32rpx;
+  color: #999;
+  font-size: 24rpx;
+}
+
+.list .item .main .right .bottom .row:last-child{
+  padding-left: 40rpx;
+}
+
+.list .item .btns{
+  padding: 20rpx 24rpx;
+  background-color: #fff;
+  text-align: right;
+}
+
+.list .item .btns view{
+  display: inline-block;
+  height: 52rpx;
+  width: 120rpx;
+  line-height: 52rpx;
+  text-align: center;
+  font-size: 28rpx;
+  border: 1px solid #b7b7b7;
+  margin-left: 20rpx;
+}
+
+.list .item .btns .gray{
+  background-color: #efefef;
+  color:#b7b7b7;
+}
+
+.commodity_screen {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.2;
+  overflow: hidden;
+  z-index: 1000;
+  color: #fff;
+}
+
+.commodity_attr_box {
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 2000;
+  background: #fff;
+  padding: 20rpx;
+}
+
+.form-group {
+    position: relative;
+    height: 100rpx;
+}
+
+.form-group input{
+  height: 100rpx;
+}
+
+.form-group .btns{
+  position: absolute;
+  right: 20rpx;
+  top:20rpx;
+  height: 60rpx;
+  z-index: 99;
+}
+
+.btn-reg {
+  margin: 60rpx 80rpx 0 40rpx;
+  border-radius: 4px;
+}
+.btn-reg button:last-child{
+  margin-top: 20rpx;
+}
+
+button[plain]::after {
+  border-width:1px;
+}

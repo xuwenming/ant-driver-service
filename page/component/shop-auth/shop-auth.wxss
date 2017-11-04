@@ -1,0 +1,63 @@
+/* page/component/shop-auth/shop-auth.wxss */
+@import '../../common/common.wxss';
+
+.content{
+  padding-top: 20rpx;
+}
+
+.shop-list{
+  background: #fff;
+  /* margin-top: 20rpx; */
+}
+
+.shop-item {
+  position: relative;
+  padding: 24rpx;
+}
+
+.un-data{
+  padding: 24rpx;
+  text-align: center
+}
+
+.list{
+  position: relative;
+  /* margin-top: 20rpx; */
+  background-color: #fff;
+}
+
+.list .list-item{
+  position: relative;
+  padding: 24rpx;
+}
+
+.list .icon{
+  position: absolute;
+  right: 20rpx;
+  top: 20rpx;
+  width: 160rpx;
+  height: 160rpx;
+}
+
+.list .icon image{
+  display:block;
+  width: 100%;
+  height: 100%;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  bottom: 50rpx;
+}
+
+.footer .label{
+  text-align: center
+}
+
+.footer navigator{
+  text-align: center;
+  padding-top: 20rpx;
+  color: #05c0ab;
+}

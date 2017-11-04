@@ -1,0 +1,39 @@
+<!--page/component/shop-auth/shop-auth.wxml-->
+<view class="container" wx:if="{{pageLoad}}">
+  <!-- un -->
+  <view wx:if="{{!status}}" class="content">
+
+    <!--有列表  -->
+    <view class='shop-list' wx:if="{{shops.length > 0}}">
+      <view class='shop-item line' wx:for="{{shops}}" wx:key="id" wx:for-item="shop" data-shop-id='{{shop.id}}' data-shop-name='{{shop.name}}' data-address="{{shop.address}}" data-contact-people="{{shop.contactPeople}}" bindtap='chooseShop'>
+        {{shop.name + ' - ' + shop.address}}
+      </view>
+    </view>
+    <!-- 无列表 -->
+    <view wx:else class='un-data'>未检测到相关门店信息，请致电客服电话申请！</view>
+  </view>
+
+  <!-- has -->
+  <view wx:else class="content">
+    <view class="list line-after line-before">	
+      <view class="list-item line">
+        <text>{{mbShop.name}}</text>
+      </view>
+      <view class="list-item line">
+        <text>{{mbShop.address}}</text>
+      </view>
+      <view class="list-item line">
+        <text>{{mbShop.contactPeople}}</text>
+      </view>
+
+      <view class="icon">
+        <image mode="scaleToFill" src="{{mbShop.statusIcon}}" />
+      </view>
+    </view>
+  </view>
+
+  <view class="footer">
+    <view class='label'>请致电400-165-1654</view>
+    <navigator url="/page/component/protocol/protocol" hover-class="navigator-hover">《仓蚁管家商家派单协议》</navigator>
+  </view>
+</view>

@@ -1,0 +1,45 @@
+<!--page/component/balance-cash/balance-cash.wxml-->
+<view class='container'>
+  <view class='content'>
+    <view class='money flex'>
+      <view class='flex-row title'>提现金额</view>
+      <view class='flex-row input'>
+        <input value="{{amount}}" maxlength='8' type="digit" placeholder='请输入' bindinput="setAmount"></input>
+      </view>
+    </view>  
+
+    <view class='flex label'>
+      <view class='flex-row lf'>
+        可提现金额：<text>￥{{deliver.amountByY}}</text> 
+      </view>
+      <view class='flex-row rg' bindtap='cashAll'>
+        全部提现
+      </view>
+    </view>
+
+    <view class='btns'>
+      <button type="yellow" bindtap="showModal" disabled="{{cashBtn.disabled}}">
+        提现
+      </button>
+    </view>
+  </view>
+
+</view>
+
+<view class="commodity_screen" bindtap="hideModal" wx:if="{{showModalStatus}}"></view>
+<view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
+  <form bindsubmit="register">
+    <view class='form-group line-after flex'>
+      <view class='flex-row'>
+        <input type="number" maxlength="6" class='form-control' placeholder='请输入验证码' bindinput="setVcode"></input>
+      </view>
+      <view class='flex-row flex flex-align-center'>
+        <button size='mini' disabled="{{vcodeBtn.disabled}}" catchtap="getVCode">{{vcodeBtn.msg}}</button>
+      </view>
+    </view>
+    <view class="btn-reg">
+      <button type="yellow" plain="true" disabled="{{confirmBtn.disabled}}"  loading="{{confirmBtn.loading}}" bindtap='cash'>确认</button>
+      <button bindtap='cancel' class="cancel">取消</button>
+    </view>
+  </form>
+</view>

@@ -1,0 +1,2 @@
+/* page/component/protocol/protocol.wxss */
+@import '../../common/common.wxss';

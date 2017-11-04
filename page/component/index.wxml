@@ -1,0 +1,19 @@
+<view class="container">
+  <view wx:if="{{pageLoad}}" class="content">
+    <form bindsubmit="register">
+      <view class="form">
+        <view class="form-group list-line userName">
+          <input name="userName" type="number" maxlength="11" class='form-control' placeholder='请输入手机号' bindinput="setUserName"></input>
+        </view>
+        <button size='mini' type="blue" plain="true" class="btn-vcode" catchtap="getVCode" disabled="{{vcodeBtn.disabled}}">{{vcodeBtn.msg}}</button>
+
+        <view class="form-group list-line line-before">
+          <input name="vcode" type="number" maxlength="6" class='form-control' placeholder='请输入验证码' bindinput="setVcode"></input>
+        </view>
+      </view>
+      <view class="btn-reg">
+        <button formType="submit" type="yellow" disabled="{{regBtn.disabled}}" loading="{{regBtn.loading}}">确认</button>
+      </view>
+    </form>
+  </view>
+</view>

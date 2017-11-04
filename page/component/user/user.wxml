@@ -1,0 +1,19 @@
+<!--page/component/user/user.wxml-->
+<view class="container">
+  <view class='list line-after line-before'>
+    <view class='item flex line-bl'>
+      <view class='flex-row label'>头像</view>
+      <view class='flex-row icon'>
+        <image src="{{avatarUrl}}" bindtap='showAvatar'></image>
+      </view>
+    </view>
+    <view class='item flex line-bl'>
+      <view class='flex-row label'>店铺</view>
+      <view class='flex-row value'>{{shopName}} </view>
+    </view>
+    <view class='item flex line-bl'>
+      <view class='flex-row label'>手机号</view>
+      <view class='flex-row value'>{{userName}} </view>
+    </view>
+  </view>
+</view>

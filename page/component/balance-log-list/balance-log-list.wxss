@@ -1,0 +1,71 @@
+/* page/component/balance-log-list/balance-log-list.wxss */
+@import '../../common/common.wxss';
+.content {
+  padding-top: 10rpx;
+}
+.box{
+  background-color: #fff;
+  /* margin-top: 10rpx; */
+}
+
+.box .header{
+  height: 88rpx;
+  padding: 0rpx 24rpx;
+}
+
+.box .header .lf{
+  line-height: 88rpx;
+  color: #999;
+  font-size: 28rpx;
+}
+
+.box .header .rg{
+  max-width: 48rpx;
+  min-width: 48rpx;
+  height: 48rpx;
+  margin-top: 20rpx;
+}
+
+.box .header .rg picker{
+  width: 100%;
+  height: 100%;
+}
+
+.box .header .rg picker image{
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.box .list{
+  position: relative;
+}
+
+.box .list .item{
+  position: relative;
+  padding: 20rpx 24rpx;
+}
+
+.box .list .item .lf .top{
+  padding-bottom: 10rpx;
+}
+
+.box .list .item .lf .top .text1{
+  font-size: 30rpx;
+  color: #333;
+}
+
+.box .list .item .lf .top .text2{
+  font-size: 28rpx;
+  color: #999;
+  padding-left: 20rpx;
+}
+
+.box .list .item .lf .bottom{
+  font-size: 28rpx;
+  color: #999;
+}
+
+.box .list .item .rg{
+  color: #fe9900;
+  text-align: right;
+}

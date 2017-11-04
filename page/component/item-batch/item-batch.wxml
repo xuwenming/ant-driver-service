@@ -1,0 +1,48 @@
+<!--page/component/item-batch/item-batch.wxml-->
+<view class='container'>
+  <view style='padding-top:20rpx;'>
+  <block wx:if="{{items == null || items.length > 0}}">
+    <checkbox-group class="list line-after" bindchange="checkboxChange">
+        <label class='item line flex' wx:for="{{items}}" wx:key="id" wx:for-item="item">
+          <view class='flex-row check flex flex-align-center'>
+            <checkbox value="{{optType == 'up' ? item.id : item.itemId}}"></checkbox>
+          </view>
+          <view class='flex-row flex main'>
+            <view class='flex-row img left'>
+              <image src="{{item.url}}"></image>
+            </view>
+            <view class='flex-row right'>
+              <view class='name'>{{item.name}}</view>
+              <block wx:if="{{optType == 'up'}}">
+                <view class='bottom'>
+                  <view class='row'>{{item.quantityUnitName}}</view>
+                  <view class='row'>库存：<text>{{item.quantity}}</text></view>
+                </view>
+              </block>
+              <block wx:else>
+                <view class='next'>
+                  <view class='row'>{{item.quantityUnitName}}</view>
+                  <view class='row'>库存：<text>{{item.quantity}}</text></view>
+                </view>
+                <view class='bottom'>
+                  <view class='row'>售价：￥{{item.price}}</view>
+                  <view class='row'>配送费：<text>￥{{item.freight}}</text></view>
+                </view>
+              </block>
+            </view>
+          </view>
+        </label>
+    </checkbox-group>
+
+    <view class='btns'>
+      <view wx:if="{{optType == 'up'}}" bindtap='batchOnline'>上架</view>
+      <view wx:if="{{optType == 'down'}}" bindtap='batchOffline'>下架</view>
+      <view wx:if="{{optType == 'del'}}" bindtap='batchDel'>删除</view>
+    </view>
+  </block>
+
+  <block wx:else>
+    <include src="/page/common/noDataTemplate.wxml"/>  
+  </block>
+  </view>
+</view>

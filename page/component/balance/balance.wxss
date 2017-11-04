@@ -1,0 +1,72 @@
+/* page/component/balance/balance.wxss */
+@import '../../common/common.wxss';
+
+.header{
+  position: relative;
+  padding: 100rpx 0 20rpx 0;
+  text-align: center;
+  background-color: #fff;
+}
+
+.header image{
+  width: 292rpx;
+  height: 243rpx;
+}
+
+.header .moeny{
+  font-size: 60rpx;
+  padding-top: 10rpx;
+}
+
+.log{
+  padding: 0 40rpx;
+  margin: 20rpx 0 0 0;
+  height: 140rpx;
+  background-color: #fff;
+}
+
+.cashlog {
+  margin:0rpx;
+}
+
+.log .lf{
+  line-height: 140rpx; 
+}
+
+.log .rg{
+  max-width: 18rpx;
+  min-width: 18rpx;
+  height: 32rpx;
+  margin-top: 54rpx;
+}
+
+.btns{
+  position: relative;
+  padding: 40rpx;
+}
+
+.btns navigator{
+  display: block;
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx;
+  border: 1px solid #fe9900;
+  text-align: center;
+  border-radius: 8rpx;  
+}
+
+.btns navigator:first-child{
+  margin-right: 20rpx;
+  background-color: #fe9900;
+  color: #fff;
+}
+
+.btns navigator:last-child{
+  margin-left: 20rpx;
+  color: #fe9900;
+}
+
+.btns navigator.cash {
+  margin-left:0;
+  color: #fff;
+}

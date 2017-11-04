@@ -1,0 +1,7 @@
+
+<view class="nodata">
+  <view><image src="{{noDataImgSrc == null ? '/image/nodata-icon.png' : noDataImgSrc}}" class="nodata_img"/></view>
+  <view>{{noDataMsg == null ? '这里还没有内容~' : noDataMsg}}</view>
+</view>
+
+

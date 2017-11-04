@@ -1,0 +1,64 @@
+{
+  "pages": [
+    "page/component/index",
+    "page/component/shop-auth/shop-auth",
+    "page/component/new-order/new-order",
+    "page/component/order-list/order-list",
+    "page/component/shop-manage/shop-manage",
+    "page/component/user/user",
+    "page/component/protocol/protocol",
+    "page/component/refuse-order/refuse-order",
+    "page/component/item-manage/item-manage",
+    "page/component/balance/balance",
+    "page/component/balance-roll/balance-roll",
+    "page/component/balance-log-list/balance-log-list",
+    "page/component/balance-log-detail/balance-log-detail",
+    "page/component/item-batch/item-batch",
+    "page/component/item-search/item-search",
+    "page/component/purchase/purchase",
+    "page/component/balance-cash/balance-cash",
+    "page/component/balance-cash-list/balance-cash-list",
+    "page/component/order-complete/order-complete"
+  ],
+  "window": {
+    "navigationBarTextStyle": "#ffffff",
+    "navigationBarTitleText": "仓蚁管家",
+    "navigationBarBackgroundColor": "#05C0AB",
+    "backgroundColor": "#efefef",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "color": "#000000",
+    "selectedColor": "#05C0AB",
+    "borderStyle": "black",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "page/component/new-order/new-order",
+        "iconPath": "image/12.png",
+        "selectedIconPath": "image/11.png",
+        "text": "新订单"
+      },
+      {
+        "pagePath": "page/component/order-list/order-list",
+        "iconPath": "image/22.png",
+        "selectedIconPath": "image/21.png",
+        "text": "已处理订单"
+      },
+      {
+        "pagePath": "page/component/shop-manage/shop-manage",
+        "iconPath": "image/32.png",
+        "selectedIconPath": "image/31.png",
+        "text": "门店管理"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "connectSocket": 10000,
+    "uploadFile": 10000,
+    "downloadFile": 10000
+  },
+  "debug": false
+}

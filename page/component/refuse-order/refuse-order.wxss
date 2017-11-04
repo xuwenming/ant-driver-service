@@ -1,0 +1,43 @@
+/* page/component/refuse-order/refuse-order.wxss */
+@import '../../common/common.wxss';
+
+.refuse textarea{
+  height: 300rpx;
+  padding: 24rpx;
+  background-color: #fff;
+  width: 100%;
+}
+
+.refuse .btns{
+  position: relative;
+  padding: 40rpx 24rpx;
+}
+
+.refuse .btns button{
+   display:inline-block; 
+  font-size: 28rpx;
+  width: 100%;
+  border-style: none;
+}
+
+.refuse .btns button::after{
+  border: 1px solid #fe9900;
+}
+
+.refuse .btns view:first-child{
+  padding-right: 24rpx;
+}
+
+.refuse .btns view:first-child button{
+  /* background-color: #fe9900; */
+  color: #fff;
+  margin-left: 20rpx;
+}
+
+.refuse .btns view:last-child{
+  padding-left: 24rpx;
+}
+
+.refuse .btns view:last-child button{
+  color: #fe9900;
+}
