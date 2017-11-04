@@ -10,7 +10,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "1.6.4",
 	"appid": "wx6196df0ee20f5fa3",
-	"projectname": "ant-deliver-service",
+	"projectname": "ant-driver-service",
 	"miniprogramRoot": "./",
 	"condition": {
 		"search": {
