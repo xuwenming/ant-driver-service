@@ -53,8 +53,8 @@ function http(options) {
   var requestTimes = options.requestTimes || 0;
   if (!options.noLogin && app.globalData.tokenId == null) {
     if (requestTimes == 3) return; // 尝试登陆不超过3次，防止死循环
+    options.requestTimes = requestTimes + 1;
     login(function(){
-      options.requestTimes = requestTimes + 1
       http(options);
     });
     return;
@@ -98,6 +98,15 @@ function http(options) {
         wx.showModal({
           content: '服务器维护中，请稍后再试！',
           showCancel: false
+        });
+        return;
+      }
+      // 登录超时
+      if (res.data && !res.data.success && res.data.obj === 'token_expire') {
+        if (requestTimes == 3) return; // 尝试登陆不超过3次，防止死循环
+        options.requestTimes = requestTimes + 1;
+        login(function () {
+          http(options);
         });
         return;
       }
