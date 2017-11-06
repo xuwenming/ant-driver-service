@@ -1,4 +1,6 @@
 var MD5 = require('../../util/md5');
+var config = require('../../config');
+
 var app = getApp();
 var requestList = {}; //api请求记录
 
@@ -47,10 +49,21 @@ function http(options) {
 
   if (!options || !options.url) throw Error('请求参数有误！');
 
+  // noLogin：无需验证登录（登录、注册、注册验证码）
+  var requestTimes = options.requestTimes || 0;
+  if (!options.noLogin && app.globalData.tokenId == null) {
+    if (requestTimes == 3) return; // 尝试登陆不超过3次，防止死循环
+    login(function(){
+      options.requestTimes = requestTimes + 1
+      http(options);
+    });
+    return;
+  }
+
   options.method = (options.method || 'GET').toUpperCase();
   options.contentType = options.contentType || 'application/json';
 
-  //下面5行是对所有http请求做防重复请求处理，后面单独分享原理
+  //下面5行是对所有http请求做防重复请求处理
   let ajaxKey = getRequestKey(options);
   if (hitRequestKey(ajaxKey)) {
     throw Error('重复提交请求：' + ajaxKey);
@@ -128,7 +141,70 @@ function httpPost(options) {
   return http(options);
 }
 
+// 登录
+function login(success, fail) {
+  var self = this;
+  wx.login({
+    success: function (data) {
+      httpPost({
+        url: config.loginUrl,
+        noLogin:true,
+        data: {
+          code: data.code
+        },
+        success: function (data) {
+          console.log('登录成功', data);
+          if (data && data.success) {
+            app.globalData.tokenId = data.obj;
+
+            httpPost({
+              url: config.getShopApplyUrl,
+              success: function (data) {
+                if (data.success && data.obj) {
+                  if (data.obj.status == 'DAS02') {
+                    if (success) success();
+                  } else {
+                    wx.redirectTo({
+                      url: '/page/component/shop-auth/shop-auth?status=' + data.obj.status
+                    });
+                  }
+
+                } else {
+                  wx.redirectTo({
+                    url: '/page/component/shop-auth/shop-auth'
+                  });
+                }
+              }
+            })
+
+          } else {
+            if (data.obj) {
+              app.globalData.openid = data.obj;
+              if (fail) fail();
+              else {
+                wx.reLaunch({
+                  url: '/page/component/index',
+                })
+              }
+            } else {
+              wx.showModal({
+                content: '请求超时，请稍后再试！',
+                showCancel: false
+              });
+            }
+
+          }
+        }
+      });
+    },
+    fail: function (err) {
+      console.log('wx.login 接口调用失败，将无法正常使用开放接口等服务', err);
+    }
+  });
+}
+
 module.exports = {
   httpGet: httpGet,
-  httpPost: httpPost
+  httpPost: httpPost,
+  login:login
 }

@@ -4,8 +4,8 @@
  * qa  appid=wx6196df0ee20f5fa3
  */
 
-// var server_host = "http://127.0.0.1:8082"; // dev
-var server_host = "http://101.132.177.151:8080"; // qa
+var server_host = "http://192.168.1.141:8082"; // dev
+// var server_host = "http://101.132.177.151:8080"; // qa
 // var server_host = "https://www.qrun360.com"; // pro
 
 var config = {

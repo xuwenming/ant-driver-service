@@ -42,7 +42,10 @@ Page({
     self.getNewOrders(true);
   },
   onHide:function(){
-    clearInterval(newOrderIntervar);
+    if (newOrderIntervar) clearInterval(newOrderIntervar);
+  },
+  onUnload:function(){
+    if (newOrderIntervar) clearInterval(newOrderIntervar);
   },
 
   /**

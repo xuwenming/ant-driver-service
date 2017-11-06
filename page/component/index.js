@@ -23,70 +23,20 @@ Page({
     var self = this;
 
     wx.showNavigationBarLoading();
-    wx.login({
-      success: function (data) {
-        request.httpPost({
-          url: config.loginUrl,
-          data: {
-            code: data.code
-          },
-          success: function (data) {
-            console.log('登录成功', data);
-            if (data && data.success) {
-              app.globalData.tokenId = data.obj;
-
-              request.httpPost({
-                url: config.getShopApplyUrl,
-                success: function (data) {
-                  if (data.success && data.obj) {
-                    if (data.obj.status == 'DAS02') {
-                      wx.switchTab({
-                        url: '/page/component/new-order/new-order'
-                      });
-                    } else {
-                      wx.redirectTo({
-                        url: '/page/component/shop-auth/shop-auth?status=' + data.obj.status
-                      });
-                    }
-                    
-                  } else {
-                    wx.redirectTo({
-                      url: '/page/component/shop-auth/shop-auth'
-                    });
-                  }
-                }
-              })
-              
-            } else {
-              if(data.obj) {
-                app.globalData.openid = data.obj;
-                wx.setNavigationBarTitle({
-                  title: '注册'
-                });
-                self.setData({
-                  pageLoad: true
-                });
-                wx.hideNavigationBarLoading();
-              } else {
-                wx.showModal({
-                  content: '请求超时，请稍后再试！',
-                  showCancel: false
-                });
-              }
-              
-            }
-
-            self.getUserInfo();
-          },
-          complete : function(){
-            
-          }
-        });
-      },
-      fail: function (err) {
-        console.log('wx.login 接口调用失败，将无法正常使用开放接口等服务', err);
-      }
+    request.login(function(){
+      wx.switchTab({
+        url: '/page/component/new-order/new-order'
+      });
+    },function(){
+      wx.setNavigationBarTitle({
+        title: '注册'
+      });
+      self.setData({
+        pageLoad: true
+      });
+      wx.hideNavigationBarLoading();
     });
+    self.getUserInfo();
   },
 
   onShow : function(){
@@ -200,6 +150,7 @@ Page({
 
     request.httpPost({
       url: config.getVcodeUrl,
+      noLogin: true,
       data: {
         mobile: self.data.userName
       },
@@ -239,6 +190,7 @@ Page({
     request.httpPost({
       url: config.regUrl,
       data: params,
+      noLogin: true,
       success: function (data) {
         if(data.success) {
           app.globalData.tokenId = data.obj;

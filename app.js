@@ -1,4 +1,4 @@
-var openIdUrl = require('./config').openIdUrl;
+
 
 App({
   onLaunch: function () {
