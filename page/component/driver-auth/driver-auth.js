@@ -8,10 +8,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    shops : [],
+    driver : {
+      userName : '',
+      nickName : '',
+      statusIcon : ''
+    },
     status : null,
-    isFromAuthManage:false,
-    mbShop:{},
     pageLoad: false
   },
 
@@ -20,48 +22,26 @@ Page({
    */
   onLoad: function (options) {
     var self = this;
-    var status = options.status;
-    self.setData({
-      status:status,
-      isFromAuthManage: options.from || false
-    });
-
-    if (!status) {
-      request.httpGet({
-        url: config.getShopsUrl,
-        success: function (data) {
-          if (data.success) {
-            self.setData({
-              shops: data.obj.rows,
-              pageLoad:true
-            });
-          }
-        }
-      })
-    } else {
-      self.getShopApply();
-    } 
-
+    self.getDriverAccount();
   },
 
-  getShopApply: function (){
-    var self = this, status = this.data.status;
+  getDriverAccount: function (){
+    var self = this;
     request.httpPost({
-      url: config.getShopApplyUrl,
+      url: config.getAccountInfoUrl,
       success: function (data) {
         if (data.success && data.obj) {
-          if (!self.data.isFromAuthManage && data.obj.status == 'DAS02') {
+          if (data.obj.account.handleStatus == 'DAHS02') {
             wx.switchTab({
               url: '/page/component/new-order/new-order'
             });
           } else {
             self.setData({
               status: data.obj.status,
-              mbShop: {
-                name: data.obj.mbShop.name,
-                address: data.obj.mbShop.address,
-                contactPeople: data.obj.mbShop.contactPeople,
-                statusIcon: data.obj.status == 'DAS01' ? '/image/auth_ing.png' : (data.obj.status == 'DAS02' ? '/image/auth_success.png' : '/image/auth_failed.png')
+              driver: {
+                userName: data.obj.account.userName,
+                nickName: data.obj.account.nickName,
+                statusIcon: data.obj.handleStatus == 'DAHS01' ? '/image/auth_ing.png' : (data.obj.handleStatus == 'DAHS02' ? '/image/auth_success.png' : '/image/auth_failed.png')
               },
               pageLoad: true
             });
@@ -70,7 +50,11 @@ Page({
       }
     })
   },
-
+  makePhoneCall: function () {
+    wx.makePhoneCall({
+      phoneNumber: '4000021365',
+    })
+  },
   onPullDownRefresh: function () {
     if(this.data.status) {
       this.getShopApply();

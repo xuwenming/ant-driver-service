@@ -1,0 +1,42 @@
+<!--page/component/shop-manage/shop-manage.wxml-->
+<view class="container" wx:if="{{pageLoad}}">
+  <!--头部  -->
+  <view class='header'>
+    <view class='header-bar'>
+      <button size="mini" type="{{online.type}}" plain='true' class="online" bindtap='changeOnline'>{{online.name}}</button>
+    </view>
+    <view class='flex header-bottom'>
+        <view class='flex-row left' bindtap='todayOrders'>
+          <view class='h3'>{{accountInfo.validOrders}}</view>
+          <view class='p'>今日有效订单</view>
+        </view> 
+        <view class='flex-row center'>
+          <view class='top'>
+            <image mode="scaleToFill center" src="{{accountInfo.avatarUrl}}" bindtap='showAvatar'></image>
+          </view>
+          <view class='name'>{{accountInfo.nickName}}</view>
+        </view>
+        <view class='flex-row left' bindtap='todayOrders'>
+          <view class='h3'>￥{{accountInfo.turnover}}</view>
+          <view class='p'>今日营业额</view>
+        </view>
+    </view>
+  </view>
+
+  <!--6宫格  -->
+  <view class='box flex'>
+    <navigator class='flex-row' url="/page/component/balance/balance">
+      <view class='icon'><image src='../../../image/moneyAccount.png'></image></view>
+      <view class='label'>财务信息</view>
+    </navigator>
+    <navigator class='flex-row' bindtap='toUser'>
+      <view class='icon'><image src='../../../image/man.png'></image></view>
+      <view class='label'>个人信息</view>
+    </navigator>
+    <view class='flex-row'></view>
+  </view>
+
+    
+
+
+</view>

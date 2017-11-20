@@ -10,7 +10,7 @@
 
     <view class='flex label'>
       <view class='flex-row lf'>
-        可提现金额：<text>￥{{deliver.amountByY}}</text> 
+        可提现金额：<text>￥{{driver.amountByY}}</text> 
       </view>
       <view class='flex-row rg' bindtap='cashAll'>
         全部提现

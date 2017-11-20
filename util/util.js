@@ -116,6 +116,50 @@ Util.format = function (date, fmt) { //author: meizz
     fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
   return fmt;
 };
+ //获取两点距离
+var PI = Math.PI;
+function getRad(d) {
+  return d * PI / 180.0;
+}
+Util.getDistance = function (lng1, lat1, lng2, lat2) {
+    var radLat1 = getRad(lat1);
+    var radLat2 = getRad(lat2);
+    var a = radLat1 - radLat2;
+    var b = getRad(lng1) - getRad(lng2);
+    var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(radLat1)
+      * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)));
+    s = s * 6378137.0;// 取WGS84标准参考椭球中的地球长半径(单位:m)
+    s = Math.round(s * 10000) / 10000;
+    return s;
+  }
+  //火星转百度
+  Util.marsTobaidu = function (lng,lat){
+    var x_pi = 3.14159265358979324 * 3000.0 / 180.0;
+    var baidu_point = { lng: 0, lat: 0 };
+    var x = lng;
+    var y = lat;
+    var z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * x_pi);
+    var theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * x_pi);
+    baidu_point.lng = z * Math.cos(theta) + 0.0065;
+    baidu_point.lat = z * Math.sin(theta) + 0.006;
+    return baidu_point;
+  }
+  //百度转火星
+  Util.baiduTomars = function (lng,lat) {
+    var x_pi = 3.14159265358979324 * 3000.0 / 180.0;
+    var mars_point = { lng: 0, lat: 0 };
+    var x = lng - 0.0065;
+    var y = lat - 0.006;
+    var z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * x_pi);
+    var theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * x_pi);
+    mars_point.lng = z * Math.cos(theta);
+    mars_point.lat = z * Math.sin(theta);
+    return mars_point;
+  }
+  
+    
+  
+  
 
 module.exports = {
   formatTime: formatTime,

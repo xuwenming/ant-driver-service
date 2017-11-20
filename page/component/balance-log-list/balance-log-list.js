@@ -43,6 +43,7 @@ Page({
       url: config.getBalanceLogsUrl,
       data: { date: self.data.cond.date, page: currPage, rows: rows},
       success: function (data) {
+        console.log(data)
         if (data.success) {
           if (data.obj.rows.length >= 10) {
             currPage++;

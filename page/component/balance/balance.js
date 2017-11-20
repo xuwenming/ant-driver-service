@@ -33,9 +33,10 @@ Page({
     request.httpGet({
       url: config.getBalanceUrl,
       success: function (data) {
+        console.log(data)
         if (data.success) {
           self.setData({
-            balanceAmount: Util.fenToYuan(data.obj.deliverBalance.amount)
+            balanceAmount: Util.fenToYuan(data.obj.driverBalance.amount)
           });
         }
       }

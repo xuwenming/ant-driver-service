@@ -10,7 +10,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    deliver: {
+    driver: {
       amountByY: 0,
       amountByF: 0
     },
@@ -46,7 +46,7 @@ Page({
   },
 
   setAmount: function (e) {
-    var amount = Util.clearNoNum(e.detail.value), amountByF = this.data.deliver.amountByF;
+    var amount = Util.clearNoNum(e.detail.value), amountByF = this.data.driver.amountByF;
 
     if (!Util.isEmpty(amount) && amount >= 1 && amount * 1000 / 10 <= amountByF) {
       this.setData({
@@ -78,7 +78,7 @@ Page({
   },
 
   cashAll: function () {
-    var amountByY = this.data.deliver.amountByY.replace(/[,]/g, '');
+    var amountByY = this.data.driver.amountByY.replace(/[,]/g, '');
     if (amountByY > 0)
       this.setData({
         'cashBtn.disabled': false,
@@ -144,9 +144,9 @@ Page({
       success: function (data) {
         if (data.success) {
           self.setData({
-            deliver: {
-              amountByY: Util.fenToYuan(data.obj.deliverBalance.amount),
-              amountByF: data.obj.deliverBalance.amount
+            driver: {
+              amountByY: Util.fenToYuan(data.obj.driverBalance.amount),
+              amountByF: data.obj.driverBalance.amount
             }
           });
         }

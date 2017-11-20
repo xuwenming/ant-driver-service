@@ -10,10 +10,9 @@ Page({
    */
   data: {
     accountInfo : {
-      userName:'',
+      userName: '',
+      nickName: '',
       avatarUrl: '/image/default_icon.png',
-      shopName:'',
-      shopStatus:'',
       validOrders:0,
       turnover:0
     },
@@ -45,7 +44,7 @@ Page({
       success: function (data) {
         if (data.success) {
           wx.showToast({
-            title: online == 1 ? '营业中' : '停止营业',
+            title: online == 1 ? '上线成功' : '已下线',
             icon: 'success',
             mask: true,
             duration: 1000,
@@ -54,7 +53,7 @@ Page({
                 online: {
                   type: online == 1 ? 'yellow' : 'default',
                   online: online,
-                  name: online == 1 ? '营业中' : '停止营业'
+                  name: online == 1 ? '接单中' : '已下线'
                 }
               });
             }
@@ -78,20 +77,19 @@ Page({
       url: config.getAccountInfoUrl,
       success: function (data) {
         if (data.success) {
-          var online = data.obj.shopDeliverApply.online;
+          var online = data.obj.account.online;
           self.setData({
             accountInfo: {
               userName: data.obj.account.userName,
+              nickName: data.obj.account.nickName,
               avatarUrl: data.obj.account.icon || '/image/default_icon.png',
-              shopName: data.obj.mbShop.name,
-              shopStatus: data.obj.shopDeliverApply.status,
               validOrders: data.obj.todayQuantity,
               turnover: Util.fenToYuan(data.obj.todayAmount)
             },
             online:{
               type: online == 1 ? 'yellow' : 'default',
               online: online,
-              name: online == 1 ? '营业中' : '停止营业'
+              name: online == 1 ? '接单中' : '已下线'
             },
             pageLoad:true
           });
@@ -102,25 +100,21 @@ Page({
   
   toUser : function(){
     var url = '/page/component/user/user?userName=' + this.data.accountInfo.userName 
-      + '&shopName=' + this.data.accountInfo.shopName
+      + '&nickName=' + this.data.accountInfo.nickName
       + '&avatarUrl=' + this.data.accountInfo.avatarUrl;
     wx.navigateTo({
       url: url
     })
   },
-
-  toPurchase: function(){
-    request.httpGet({
-      url: config.getBaseDataByKeyUrl,
-      data: { key: 'DSV400' },
-      success: function (data) {
-        if (data.success && data.obj) {
-          wx.showModal({
-            content: '请关注微信公众号【' + data.obj.name + '】进行采购！',
-            showCancel: false
-          });
-        }
-      }
+  todayOrders: function () {
+    wx.navigateTo({
+      url: '/page/component/today-order-list/today-order-list'
+    })
+  },
+  showAvatar: function () {
+    var self = this;
+    wx.previewImage({
+      urls: [self.data.accountInfo.avatarUrl]
     })
   }
 })

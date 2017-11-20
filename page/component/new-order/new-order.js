@@ -14,9 +14,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    orders:null,
+    orders:true,
     hasMore: false,
     wxTimerList: {},
+    hasOrder:false,
 
     noDataMsg: 'Sorry！没有新的订单哦~'
   },
@@ -36,7 +37,7 @@ Page({
   onShow: function () {
     var self = this;
     newOrderIntervar = setInterval(function () {
-      self.getNewOrders(true);
+     self.getNewOrders(true);
     }, 10000);
     wx.showNavigationBarLoading();
     self.getNewOrders(true);
@@ -59,66 +60,26 @@ Page({
     //   mask: true
     // })
     request.httpGet({
-      url: config.getOrdersUrl,
-      // data: { status: 'DOS10', page: currPage, rows: rows},
-      data: { status: 'DOS10'},
+      url: config.getNewOrdersUrl,
       success: function (data) {
         if (data.success) {
           if (data.obj.rows.length > 0) {
-            self.voiceReminder();
+            self.setData({
+              hasOrder:true
+            });
+            //  self.voiceReminder();
           }
-          // if (data.obj.rows.length >= rows) {
-          //   currPage++;
-          //   self.setData({
-          //     hasMore: true
-          //   });
-          // } else {
-          //   self.setData({
-          //     hasMore: false
-          //   });
-          // }
 
           for (var i=0; i<data.obj.rows.length; i++) {
             data.obj.rows[i].amount = Util.fenToYuan(data.obj.rows[i].amount);
             data.obj.rows[i].addtime = Util.format(new Date(data.obj.rows[i].addtime.replace(/-/g, "/")), 'MM-dd HH:mm');
-            data.obj.rows[i].distance = Util.distanceConvert(data.obj.rows[i].distance);
-
-            if(!self.data.wxTimerList["wxTimer" + data.obj.rows[i].id]) {
-              var time = data.obj.rows[i].millisecond;
-              if (time > 0) {
-              // if (time) {
-                time = time/1000;
-                var m = Math.floor(((time % 86400) % 3600) / 60),
-                    s = Math.floor(((time % 86400) % 3600) % 60);
-                var wxTimer = new timer({
-                  beginTime: "00:" + m + ":" + s,
-                  // beginTime: "00:10:00",
-                  name: "wxTimer" + data.obj.rows[i].id,
-                  complete: function () {
-                    var orders = self.data.orders;
-                    for (var j in orders) {
-                      if (orders[j].id == this.name.substr(7)) {
-                        orders.splice(j, 1);
-                        break;
-                      }
-                    }
-
-                    self.setData({
-                      orders: orders
-                    });
-                  }
-                })
-                wxTimer.start(self);
-              } else {
-                data.obj.rows.splice(i--, 1);
-              }
-            }
+            data.obj.rows[i].deliverOrderShop.distance = Util.distanceConvert(data.obj.rows[i].deliverOrderShop.distance);
           }
           var orders = self.data.orders;
           if (isRefresh) orders = data.obj.rows;
           else orders = orders.concat(data.obj.rows);
           self.setData({
-            orders: orders
+            orders: orders,
           });
         }
       }
@@ -128,7 +89,6 @@ Page({
   processOrder:function(e){
     // 发送request处理订单
     var self = this;
-
     wx.showModal({
       title:'提示',
       content: '接单之后不可取消，是否继续？',
@@ -165,23 +125,47 @@ Page({
   },
 
   refuseOrder : function(e){
-    wx.navigateTo({
-      url: '/page/component/refuse-order/refuse-order?orderId=' + e.target.dataset.orderId
-    })
+    var self = this;
+    wx.showModal({
+      title: '提示',
+      content: '您确定要拒绝订单吗？',
+      success : function(res) {
+          if (res.confirm) {
+            request.httpPost({
+              url: config.refuseOrderUrl,
+              data: { id: e.target.dataset.orderId },
+              success: function (data) {
+                if (data.success) {
+                  var orders = self.data.orders;
+                  orders.splice(e.target.dataset.index, 1);
+                  self.setData({
+                    orders: orders
+                  });
+                 }
+              }
+           })
+        }
+      }
+   })
+            
   },
 
   voiceReminder: function(){
     request.httpGet({
-      url: config.getNewOrderCountUrl,
+      url: config.updateCountNewAllocationOrder,
       success: function (data) {
+       console.log("播放声音")
+       console.log(data)
         if (data.success && data.obj > 0) {
+
           request.httpGet({
             url: config.getBaseDataByKeyUrl,
             data: { key:'DSV300'},
             success: function (data) {
-              if (data.success && data.obj) {
+              if (data.success) {
+                console.log("播放")
                 wx.playBackgroundAudio({
-                  dataUrl: data.obj.icon
+                  dataUrl:data.obj.icon
                 })
               }
             }

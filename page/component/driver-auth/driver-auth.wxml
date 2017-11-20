@@ -1,0 +1,21 @@
+<!--page/component/shop-auth/shop-auth.wxml-->
+<view class="container" wx:if="{{pageLoad}}">
+  <view class="content">
+    <view class="list line-after line-before">	
+      <view class="list-item line">
+        <text>账号：{{driver.userName}}</text>
+      </view>
+      <view class="list-item line">
+        <text>昵称：{{driver.nickName}}</text>
+      </view>
+      <view class="icon">
+        <image mode="scaleToFill" src="{{driver.statusIcon}}" />
+      </view>
+    </view>
+  </view>
+
+  <view class="footer">
+    <view class='label' bindTap="makePhoneCall">请致电400-002-1365</view>
+    <navigator url="/page/component/protocol/protocol" hover-class="navigator-hover">《仓蚁管家商家派单协议》</navigator>
+  </view>
+</view>

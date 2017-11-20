@@ -1,28 +1,25 @@
 {
   "pages": [
     "page/component/index",
-    "page/component/shop-auth/shop-auth",
+    "page/component/driver-auth/driver-auth",
     "page/component/new-order/new-order",
     "page/component/order-list/order-list",
-    "page/component/shop-manage/shop-manage",
+    "page/component/today-order-list/today-order-list",
+    "page/component/driver-manage/driver-manage",
     "page/component/user/user",
     "page/component/protocol/protocol",
     "page/component/refuse-order/refuse-order",
-    "page/component/item-manage/item-manage",
     "page/component/balance/balance",
     "page/component/balance-roll/balance-roll",
     "page/component/balance-log-list/balance-log-list",
     "page/component/balance-log-detail/balance-log-detail",
-    "page/component/item-batch/item-batch",
-    "page/component/item-search/item-search",
-    "page/component/purchase/purchase",
     "page/component/balance-cash/balance-cash",
     "page/component/balance-cash-list/balance-cash-list",
     "page/component/order-complete/order-complete"
   ],
   "window": {
     "navigationBarTextStyle": "#ffffff",
-    "navigationBarTitleText": "仓蚁管家",
+    "navigationBarTitleText": "仓蚁管家骑手版",
     "navigationBarBackgroundColor": "#05C0AB",
     "backgroundColor": "#efefef",
     "backgroundTextStyle": "dark",
@@ -47,10 +44,10 @@
         "text": "已处理订单"
       },
       {
-        "pagePath": "page/component/shop-manage/shop-manage",
+        "pagePath": "page/component/driver-manage/driver-manage",
         "iconPath": "image/32.png",
         "selectedIconPath": "image/31.png",
-        "text": "门店管理"
+        "text": "个人中心"
       }
     ]
   },

@@ -19,7 +19,7 @@
             <view class='flex-row lf'>
               <view class='flex top'>
                 <view class='flex-row text1'>{{balanceLog.refTypeName}}</view>
-                <view class='flex-row text2'>订单号：{{balanceLog.id}}</view>
+                <view class='flex-row text2'>提现流水号：{{balanceLog.id}}</view>
               </view>
               <view class='bottom'>{{balanceLog.addtime}}</view>
             </view>

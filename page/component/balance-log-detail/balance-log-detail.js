@@ -41,8 +41,6 @@ Page({
       if (options.refType == 'BT101') {
         refTypeName = '派单钱包提现至微信零钱';
         status = (options.handleStatus === undefined || options.handleStatus == 'HS02') ? '已存入微信零钱' : (options.handleStatus == 'HS01' ? '处理中' : '提现被驳回');
-      } else {
-        refTypeName = options.refType == 'BT051' ? '采购钱包转入到派单钱包' : '派单钱包转出到采购钱包';
       }
       self.setData({
         balanceDetail: {

@@ -4,7 +4,7 @@ var config = require('../../../config');
 var request = require('../../common/request');
 var Util = require('../../../util/util').Util;
 
-var currPage = 1, rows = 10;
+var currPage = 1, rows = 10, getDistanceInterval;
 
 Page({
 
@@ -16,7 +16,9 @@ Page({
     orders: null,
     hasMore: false,
 
-    noDataMsg:'没有相关订单哦~'
+    noDataMsg:'没有相关订单哦~',
+    lat: null,
+    long: null
   },
 
   /**
@@ -30,9 +32,30 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.getOrders(true);
+    var self = this;
+    self.getOrders(true);
+    getDistanceInterval = setInterval(function () {
+      self.getDistance(true);
+     }, 5000);
+     
   },
-
+  getDistance: function(){
+    var self = this;
+    var orders = self.data.orders;
+    wx.getLocation({
+      type: 'gcj02 ',
+      success: function (res) {
+        var baidu_point = Util.marsTobaidu(res.longitude, res.latitude);
+        for (var i in orders) {
+          var distance = Util.getDistance(baidu_point.lng, baidu_point.lat, orders[i].shop.longitude, orders[i].shop.latitude);
+          orders[i].shopDistance = Util.distanceConvert(distance);
+        }
+        self.setData({
+          orders: orders
+        });
+      },
+    })
+  },
   switchTab:function(e){
     var self = this;
 
@@ -50,17 +73,18 @@ Page({
 
   // 发货
   orderDeliver: function (e) {
+    console.log(e)
     // 发送request处理订单
     var self = this;
 
     wx.showModal({
       title: '提示',
-      content: '是否确定订单号【' + e.target.dataset.orderId + '】已发货？',
+      content: '是否确定订单号【' + e.target.dataset.deliverordershopid + '】已发货？',
       success: function (res) {
         if (res.confirm) {
           request.httpPost({
             url: config.deliverOrderUrl,
-            data: { id: e.target.dataset.orderId },
+            data: { id: e.target.dataset.orderid },
             showLoading: true,
             success: function (data) {
               if (data.success) {
@@ -90,9 +114,36 @@ Page({
   orderComplete: function (e) {
     // 发送request处理订单
     var self = this;
-    wx.navigateTo({
-      url: '/page/component/order-complete/order-complete?orderId=' + e.target.dataset.orderId
-    })
+    wx.showModal({
+      title: '提示',
+      content: '是否确定订单号【' + e.target.dataset.deliverordershopid + '】已送达完成？',
+      success: function (res) {
+        if (res.confirm) {
+          request.httpPost({
+            url: config.completeOrderUrl,
+            data: { id: e.target.dataset.orderid },
+            showLoading: true,
+            success: function (data) {
+              if (data.success) {
+                wx.showToast({
+                  title: "送达完成",
+                  icon: 'success',
+                  mask: true,
+                  duration: 500,
+                  complete: function () {
+                    var orders = self.data.orders;
+                    orders.splice(e.target.dataset.index, 1);
+                    self.setData({
+                      orders: orders
+                    });
+                  }
+                })
+              }
+            }
+          })
+        }
+      }
+    });
 
   },
 
@@ -103,13 +154,9 @@ Page({
   getOrders: function (isRefresh) {
     var self = this, currentTab = this.data.currentTab, status;
     var url = config.getOrdersUrl;
-    if (currentTab == 0) status = 'DOS20';
-    else if (currentTab == 1) status = 'DOS25';
-    else if (currentTab == 2) status = 'DOS30,DOS40';
-    else {
-      status = 'DOS15';
-      url = config.getRefusedOrdersUrl;
-    }
+    if (currentTab == 0) status = 'DDSS05';
+    else if (currentTab == 1) status = 'DDSS10';
+    else if (currentTab == 2) status = 'DDSS20';
 
     // wx.showLoading({
     //   title: '努力加载中...',
@@ -121,6 +168,7 @@ Page({
       url: url,
       data: { status: status, page: currPage, rows: rows },
       success: function (data) {
+        console.log(data);
         if (data.success) {
           if (data.obj.rows.length >= rows) {
             currPage++;
@@ -132,18 +180,19 @@ Page({
               hasMore: false
             });
           }
-
           for (var i in data.obj.rows) {
             data.obj.rows[i].amount = Util.fenToYuan(data.obj.rows[i].amount);
             data.obj.rows[i].addtime = Util.format(new Date(data.obj.rows[i].addtime.replace(/-/g, "/")), 'MM-dd HH:mm');
-            data.obj.rows[i].distance = Util.distanceConvert(data.obj.rows[i].distance);
-          }
+            data.obj.rows[i].deliverOrderShop.distance = Util.distanceConvert(data.obj.rows[i].deliverOrderShop.distance);
+            }
           var orders = self.data.orders;
           if (isRefresh) orders = data.obj.rows;
           else orders = orders.concat(data.obj.rows);
           self.setData({
             orders: orders
           });
+          self.getDistance();
+          console.log(orders)
         }
       }
     })
@@ -174,11 +223,17 @@ Page({
       // })
     }
   },
-
+  makePhoneCall: function (e) {
+    wx.makePhoneCall({
+      phoneNumber: e.currentTarget.dataset.phone,
+    })
+  },
   openMap: function (e) {
     var self = this,
       latitude = e.currentTarget.dataset.latitude,
       longitude = e.currentTarget.dataset.longitude;
+      //百度经纬度转火星经纬度
+    var mars_point = Util.baiduTomars(longitude,latitude);
     if (!latitude || !longitude) {
       wx.showModal({
         content: '未知位置，无法规划路线！',
@@ -188,10 +243,11 @@ Page({
     }
     wx.getLocation({
       success: function (res) {
-        wx.openLocation({
-          latitude: Number(latitude),
-          longitude: Number(longitude),
-          address: e.currentTarget.dataset.address
+     wx.openLocation({
+          latitude: Number(mars_point.lat),
+          longitude: Number(mars_point.lng),
+          address: e.currentTarget.dataset.address,
+          scale:14
         })
       },
       fail: function () {
@@ -203,4 +259,5 @@ Page({
       }
     })
   }
+  
 })

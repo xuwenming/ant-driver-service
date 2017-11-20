@@ -14,7 +14,8 @@ Page({
     tempFilePaths:[],
     completeImages:null,
     completeRemark:null,
-    uploadRequired:true
+    uploadRequired:true,
+    deliverordershopid:null
   },
 
   /**
@@ -22,20 +23,22 @@ Page({
    */
   onLoad: function (options) {
     var self = this;
+    console.log(options)
     self.setData({
-      orderId: options.orderId
+      orderId: options.orderId,
+      deliverordershopid: options.deliverordershopid
     });
 
-    request.httpPost({
-      url: config.getShopApplyUrl,
-      success: function (data) {
-        if (data.success && data.obj) {
-          self.setData({
-            uploadRequired: data.obj.uploadRequired
-          });
-        }
-      }
-    })
+    // request.httpPost({
+    //   url: config.getShopApplyUrl,
+    //   success: function (data) {
+    //     if (data.success && data.obj) {
+    //       self.setData({
+    //         uploadRequired: data.obj.uploadRequired
+    //       });
+    //     }
+    //   }
+    // })
   },
 
   setCompleteRemark: function (e) {
@@ -103,7 +106,7 @@ Page({
     var self = this;
     wx.showModal({
       title: '提示',
-      content: '是否确定订单号【' + self.data.orderId + '】已送达完成？',
+      content: '是否确定订单号【' + self.data.deliverordershopid + '】已送达完成？',
       success: function (res) {
         if (res.confirm) {
           request.httpPost({

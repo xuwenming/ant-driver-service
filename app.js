@@ -1,4 +1,6 @@
 
+var app=getApp();
+var setDriverLocation;
 
 App({
   onLaunch: function () {
@@ -19,7 +21,6 @@ App({
     })
   },
   onShow: function () {
-    // console.log('App Show')
   },
   onHide: function () {
     // console.log('App Hide')
@@ -29,7 +30,9 @@ App({
     tokenId: null,
     network:{
       isConnected:true,
-      networkType:''
+      networkType:'',
+      latitude:null,
+      longitude:null
     }
   },
   
@@ -127,5 +130,6 @@ App({
         }
       }
     })
-  }
+  },
+
 })

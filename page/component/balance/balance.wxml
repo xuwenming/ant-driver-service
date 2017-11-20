@@ -2,7 +2,7 @@
 <view class='container'>
   <view class='header'>
     <view>
-      <image src='/image/money.png'></image>
+      <image src='/image/moneybag2.png'></image>
     </view>
     <view class='moeny'>￥{{balanceAmount}}</view>
     <view class='btns'>
@@ -29,14 +29,5 @@
       <image src='/image/right.png'></image>
     </view>
   </navigator>
-
-  <view class='btns flex'>
-    <navigator class='flex-row' url="/page/component/balance-roll/balance-roll?type=in">
-      转入
-    </navigator>
-    <navigator class='flex-row' url="/page/component/balance-roll/balance-roll?type=out">
-      转出
-    </navigator>    
-  </view>
 
 </view>

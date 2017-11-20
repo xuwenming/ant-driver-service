@@ -165,22 +165,22 @@ function login(success, fail) {
           console.log('登录成功', data);
           if (data && data.success) {
             app.globalData.tokenId = data.obj;
-
             httpPost({
-              url: config.getShopApplyUrl,
+              url: config.getAccountInfoUrl,
               success: function (data) {
                 if (data.success && data.obj) {
-                  if (data.obj.status == 'DAS02') {
+                  if (data.obj.account.handleStatus == 'DAHS02') {
                     if (success) success();
                   } else {
+                    console.log("aaa")
                     wx.redirectTo({
-                      url: '/page/component/shop-auth/shop-auth?status=' + data.obj.status
+                      url: '/page/component/driver-auth/driver-auth'
                     });
                   }
 
                 } else {
                   wx.redirectTo({
-                    url: '/page/component/shop-auth/shop-auth'
+                    url: '/page/component/driver-auth/driver-auth'
                   });
                 }
               }

@@ -2,7 +2,7 @@ var app = getApp();
 var config = require('../../config');
 var Util = require('../../util/util').Util;
 var request = require('../common/request');
-var time = 59;
+var time = 59, updateDriverLocation;
 
 Page({
   data: {
@@ -24,12 +24,14 @@ Page({
 
     wx.showNavigationBarLoading();
     request.login(function(){
+      //登陆成功并认证通过   则获取实时位置
+      self.updateDriverLocation(true);
       wx.switchTab({
         url: '/page/component/new-order/new-order'
       });
     },function(){
       wx.setNavigationBarTitle({
-        title: '注册'
+        title: '骑手注册'
       });
       self.setData({
         pageLoad: true
@@ -38,7 +40,28 @@ Page({
     });
     self.getUserInfo();
   },
+  //更新骑手位置
+  updateDriverLocation : function () {
+    updateDriverLocation = setInterval(function () {
+      wx.getLocation({
+        type: 'gcj02 ',
+        success: function (res) {
+          var baidu_point = Util.marsTobaidu(res.longitude, res.latitude);
+          request.httpPost({
+            url: config.updateLocation,
+            data: { longitude: '121.553894', latitude: '31.190966'},
+            success: function (data) {
+              if (data.success) {
+               console.log("更新位置成功！")
+              }
+            }
+          })
+        }
 
+      })
+    }, 5000); 
+
+  },
   onShow : function(){
     
   },
@@ -194,9 +217,9 @@ Page({
       success: function (data) {
         if(data.success) {
           app.globalData.tokenId = data.obj;
-          
+        
           wx.redirectTo({
-            url: '/page/component/shop-auth/shop-auth',
+            url: '/page/component/driver-auth/driver-auth',
           });
         } else {
           wx.showModal({

@@ -8,8 +8,8 @@
       </view>
     </view>
     <view class='item flex line-bl'>
-      <view class='flex-row label'>店铺</view>
-      <view class='flex-row value'>{{shopName}} </view>
+      <view class='flex-row label'>昵称</view>
+      <view class='flex-row value'>{{nickName}} </view>
     </view>
     <view class='item flex line-bl'>
       <view class='flex-row label'>手机号</view>

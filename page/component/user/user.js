@@ -6,6 +6,7 @@ Page({
    */
   data: {
     userName: '',
+    nickName: '',
     avatarUrl: '/image/default_icon.png',
     shopName: ''
   },
@@ -16,8 +17,8 @@ Page({
   onLoad: function (options) {
     this.setData({
       userName: options.userName,
+      nickName: options.nickName,
       avatarUrl: options.avatarUrl || '/image/default_icon.png',
-      shopName: options.shopName
     });
   },
 
