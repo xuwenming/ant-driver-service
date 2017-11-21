@@ -19,17 +19,32 @@
               <view class='flex flex-pack-end label'>下单时间：<text>{{order.addtime}}</text></view>
             </view>
         </view>
-        <view class='flex info line-after-bl' bindtap="openMap" data-latitude="{{order.deliverOrderShop.latitude}}" data-longitude="{{order.deliverOrderShop.longitude}}" data-address="{{order.deliverOrderShop.deliverAddress}}">
+<view class='flex info line-after-bl'>
           <view class='flex-row icon'>
             <image src='/image/address.png'></image>
           </view>
           <view class='flex-row rg'>
+          <view>门店：<text class='shop'>（注：距离表示当前您到门店的距离）</text></view>
+            <view class='flex header'>
+              <view class='flex-row'><text>{{order.shop.name}}</text></view>
+              <view class='flex-row' bindtap='makePhoneCall' data-phone="{{order.shop.contactPhone}}"><text>{{order.shop.contactPhone}}</text></view>
+              <view class='flex-row'><text>{{order.shopDistance}}</text></view>
+            </view>
+            <view class='address' bindtap="openMap" data-latitude="{{order.shop.latitude}}" data-longitude="{{order.shop.longitude}}" data-address="{{order.shop.address}}"><text>{{order.shop.address}}</text></view>
+          </view>
+        </view>
+        <view class='flex info line-after-bl'>
+          <view class='flex-row icon'>
+            <image src='/image/address.png'></image>
+          </view>
+          <view class='flex-row rg'>
+            <view>客户：<text class='shop'>（注：距离表示订单到门店的距离）</text></view>
             <view class='flex header'>
               <view class='flex-row'><text>{{order.deliverOrderShop.contactPeople}}</text></view>
-              <view class='flex-row'><text>{{order.deliverOrderShop.contactPhone}}</text></view>
+              <view class='flex-row' bindtap='makePhoneCall' data-phone="{{order.deliverOrderShop.contactPhone}}"><text>{{order.deliverOrderShop.contactPhone}}</text></view>
               <view class='flex-row'><text>{{order.deliverOrderShop.distance}}</text></view>
             </view>
-            <view class='address'><text >{{order.deliverOrderShop.deliverAddress}}</text></view>
+            <view class='address' bindtap="openMap" data-latitude="{{order.deliverOrderShop.latitude}}" data-longitude="{{order.deliverOrderShop.longitude}}" data-address="{{order.deliverOrderShop.deliverAddress}}"><text >{{order.deliverOrderShop.deliverAddress}}</text></view>
           </view>
         </view>
         <!-- goods list -->

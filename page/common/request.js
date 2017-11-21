@@ -172,7 +172,6 @@ function login(success, fail) {
                   if (data.obj.account.handleStatus == 'DAHS02') {
                     if (success) success();
                   } else {
-                    console.log("aaa")
                     wx.redirectTo({
                       url: '/page/component/driver-auth/driver-auth'
                     });

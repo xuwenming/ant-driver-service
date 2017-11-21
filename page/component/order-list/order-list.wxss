@@ -104,7 +104,11 @@
 .order-list .order-item .info .rg .header{
   color: #333;
 }
-
+.order-list .order-item .info .rg .shop{
+  color: #666;
+  font-size: 26rpx;
+  padding-top: 10rpx;
+}
 .order-list .order-item .info .rg .header .flex-row{
   height: 32rpx;
   line-height:32rpx; 

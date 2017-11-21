@@ -6,7 +6,7 @@ var Util = require('../../../util/util').Util;
 var timer = require('../../../util/wxTimer');
 
 
-var currPage = 1, rows = 10, newOrderIntervar;
+var currPage = 1, rows = 10, newOrderIntervar, getDistanceInterval;
 
 Page({
 
@@ -41,6 +41,9 @@ Page({
     }, 10000);
     wx.showNavigationBarLoading();
     self.getNewOrders(true);
+    getDistanceInterval = setInterval(function () {
+      self.getDistance(true);
+    }, 5000);
   },
   onHide:function(){
     if (newOrderIntervar) clearInterval(newOrderIntervar);
@@ -67,7 +70,7 @@ Page({
             self.setData({
               hasOrder:true
             });
-            //  self.voiceReminder();
+             self.voiceReminder();
           }
 
           for (var i=0; i<data.obj.rows.length; i++) {
@@ -81,11 +84,29 @@ Page({
           self.setData({
             orders: orders,
           });
+          self.getDistance();
+      
         }
       }
     })
   },
-
+  getDistance: function () {
+    var self = this;
+    var orders = self.data.orders;
+    wx.getLocation({
+      type: 'gcj02 ',
+      success: function (res) {
+        var baidu_point = Util.marsTobaidu(res.longitude, res.latitude);
+        for (var i in orders) {
+          var distance = Util.getDistance(baidu_point.lng, baidu_point.lat, orders[i].shop.longitude, orders[i].shop.latitude);
+          orders[i].shopDistance = Util.distanceConvert(distance);
+        }
+        self.setData({
+          orders: orders
+        });
+      },
+    })
+  },
   processOrder:function(e){
     // 发送request处理订单
     var self = this;
@@ -157,7 +178,6 @@ Page({
        console.log("播放声音")
        console.log(data)
         if (data.success && data.obj > 0) {
-
           request.httpGet({
             url: config.getBaseDataByKeyUrl,
             data: { key:'DSV300'},
@@ -206,11 +226,17 @@ Page({
       // })
     }
   },
-
-  openMap: function(e){
-    var self = this, 
-        latitude = e.currentTarget.dataset.latitude, 
-        longitude = e.currentTarget.dataset.longitude;
+  makePhoneCall: function (e) {
+    wx.makePhoneCall({
+      phoneNumber: e.currentTarget.dataset.phone,
+    })
+  },
+  openMap: function (e) {
+    var self = this,
+      latitude = e.currentTarget.dataset.latitude,
+      longitude = e.currentTarget.dataset.longitude;
+    //百度经纬度转火星经纬度
+    var mars_point = Util.baiduTomars(longitude, latitude);
     if (!latitude || !longitude) {
       wx.showModal({
         content: '未知位置，无法规划路线！',
@@ -221,12 +247,12 @@ Page({
     wx.getLocation({
       success: function (res) {
         wx.openLocation({
-          latitude: Number(latitude),
-          longitude: Number(longitude),
+          latitude: mars_point.lat,
+          longitude: mars_point.lng,
           address: e.currentTarget.dataset.address
         })
       },
-      fail: function(){
+      fail: function () {
         app.getAuthorize({
           scope: 'scope.userLocation',
           content: '检测到您没打开定位权限，是否去设置打开？',

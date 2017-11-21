@@ -37,7 +37,6 @@ Page({
     getDistanceInterval = setInterval(function () {
       self.getDistance(true);
      }, 5000);
-     
   },
   getDistance: function(){
     var self = this;
@@ -192,7 +191,6 @@ Page({
             orders: orders
           });
           self.getDistance();
-          console.log(orders)
         }
       }
     })
@@ -244,10 +242,9 @@ Page({
     wx.getLocation({
       success: function (res) {
      wx.openLocation({
-          latitude: Number(mars_point.lat),
-          longitude: Number(mars_point.lng),
-          address: e.currentTarget.dataset.address,
-          scale:14
+          latitude: mars_point.lat,
+          longitude: mars_point.lng,
+          address: e.currentTarget.dataset.address
         })
       },
       fail: function () {
