@@ -29,10 +29,10 @@
       <view class='icon'><image src='../../../image/moneyAccount.png'></image></view>
       <view class='label'>财务信息</view>
     </navigator>
-    <navigator class='flex-row' bindtap='toUser'>
+    <view class='flex-row' bindtap='toUser'>
       <view class='icon'><image src='../../../image/man.png'></image></view>
       <view class='label'>个人信息</view>
-    </navigator>
+    </view>
     <view class='flex-row'></view>
   </view>
 

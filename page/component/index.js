@@ -24,8 +24,16 @@ Page({
 
     wx.showNavigationBarLoading();
     request.login(function(){
-      //登陆成功并认证通过   则获取实时位置
-      self.updateDriverLocation(true);
+      app.getAuthorize({
+        scope: 'scope.userLocation',
+        content: '检测到您没打开定位权限，是否去设置打开？',
+        required: true, // 必须授权
+        callback: function () {
+          //登陆成功并认证通过   则获取实时位置
+          self.updateDriverLocation(true);
+        }
+      })
+      
       wx.switchTab({
         url: '/page/component/new-order/new-order'
       });
@@ -42,24 +50,25 @@ Page({
   },
   //更新骑手位置
   updateDriverLocation : function () {
-    updateDriverLocation = setInterval(function () {
-      wx.getLocation({
-        type: 'gcj02 ',
-        success: function (res) {
-          var baidu_point = Util.marsTobaidu(res.longitude, res.latitude);
-          request.httpPost({
-            url: config.updateLocation,
-            data: { longitude: '121.553894', latitude: '31.190966'},
-            success: function (data) {
-              if (data.success) {
-               console.log("更新位置成功！")
+    if (!updateDriverLocation)
+      updateDriverLocation = setInterval(function () {
+        wx.getLocation({
+          type: 'gcj02 ',
+          success: function (res) {
+            var baidu_point = Util.marsTobaidu(res.longitude, res.latitude);
+            request.httpPost({
+              url: config.updateLocation,
+              data: { longitude: '121.553894', latitude: '31.190966'},
+              success: function (data) {
+                if (data.success) {
+                console.log("更新位置成功！")
+                }
               }
-            }
-          })
-        }
+            })
+          }
 
-      })
-    }, 5000); 
+        })
+      }, 5000); 
 
   },
   onShow : function(){
