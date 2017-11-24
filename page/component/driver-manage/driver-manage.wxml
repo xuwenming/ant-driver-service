@@ -18,7 +18,7 @@
         </view>
         <view class='flex-row left' bindtap='todayOrders'>
           <view class='h3'>￥{{accountInfo.turnover}}</view>
-          <view class='p'>今日营业额</view>
+          <view class='p'>今日收益</view>
         </view>
     </view>
   </view>

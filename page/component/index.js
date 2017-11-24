@@ -33,7 +33,6 @@ Page({
           self.updateDriverLocation(true);
         }
       })
-      
       wx.switchTab({
         url: '/page/component/new-order/new-order'
       });
@@ -68,7 +67,7 @@ Page({
           }
 
         })
-      }, 5000); 
+      }, 5000);
 
   },
   onShow : function(){

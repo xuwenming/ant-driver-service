@@ -12,6 +12,8 @@ Page({
    */
   data: {
     balanceLogs:null,
+    income: null,  // 收入
+    expenditure: null, // 支出
     cond:{
       showDate : '本月',
       date: Util.format(new Date(), 'yyyy-MM'),
@@ -70,8 +72,16 @@ Page({
           var balanceLogs = self.data.balanceLogs;
           if (isRefresh) balanceLogs = data.obj.rows;
           else balanceLogs = balanceLogs.concat(data.obj.rows);
+          var income = self.data.income;
+          var expenditure = self.data.expenditure;
+          if (data.obj.footer[0]!= null) {
+            income = data.obj.footer[0].amountIn;
+            expenditure = data.obj.footer[0].amountOut;
+          }
           self.setData({
-            balanceLogs: balanceLogs
+            balanceLogs: balanceLogs,
+            income: Util.fenToYuan(income),
+            expenditure: Util.fenToYuan(expenditure)
           });
         }
       }

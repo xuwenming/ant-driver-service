@@ -15,7 +15,7 @@
       <!-- list -->
       <view class='list line-after line-before'  wx:if="{{balanceLogs == null || balanceLogs.length > 0}}">
         <view class='item line-bl' wx:for="{{balanceLogs}}" wx:key="id" wx:for-item="balanceLog">
-          <navigator class='flex '  url="/page/component/balance-log-detail/balance-log-detail?id={{balanceLog.id}}&refType={{balanceLog.refType}}&amount={{balanceLog.amount}}&addtime={{balanceLog.addtime}}&handleStatus={{balanceLog.handleStatus}}">
+          <!-- <navigator class='flex '  url="/page/component/balance-log-detail/balance-log-detail?id={{balanceLog.id}}&refType={{balanceLog.refType}}&amount={{balanceLog.amount}}&addtime={{balanceLog.addtime}}&handleStatus={{balanceLog.handleStatus}}"> -->
             <view class='flex-row lf'>
               <view class='flex top'>
                 <view class='flex-row text1'>{{balanceLog.refTypeName}}</view>
@@ -24,7 +24,7 @@
               <view class='bottom'>{{balanceLog.addtime}}</view>
             </view>
             <view class='flex-row flex flex-align-center flex-pack-end rg'>{{balanceLog.amount}}</view>
-          </navigator>
+          <!-- </navigator> -->
         </view>
       </view>
 

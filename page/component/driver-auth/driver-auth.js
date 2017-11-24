@@ -57,48 +57,12 @@ Page({
   },
   onPullDownRefresh: function () {
     if(this.data.status) {
-      this.getShopApply();
+      this.getDriverAccount();
     }
     setTimeout(function () {
       wx.stopPullDownRefresh()
     }, 500);
-  },
-
-  chooseShop : function(e){
-    var self = this;
-    wx.showModal({
-      title:'提示',
-      content: '是否绑定门店【' + e.target.dataset.shopName+'】，绑定之后不可更改！',
-      success: function (res) {
-        if (res.confirm) {
-          request.httpPost({
-            url: config.addShopApplyUrl,
-            data: { shopId: e.target.dataset.shopId},
-            success: function (data) {
-              if (data.success) {
-                wx.showModal({
-                  title: '提示',
-                  content: '门店申请已提交，请耐心等待或致电客服！',
-                  showCancel: false,
-                  success: function (res) {
-                    if (res.confirm) {
-                      self.setData({
-                        status:'DAS01',
-                        mbShop:{
-                          name: e.target.dataset.shopName,
-                          address: e.target.dataset.address,
-                          contactPeople: e.target.dataset.contactPeople,
-                          statusIcon: '/image/auth_ing.png'
-                        }
-                      });
-                    }
-                  }
-                });
-              }
-            }
-          })
-        }
-      }
-    });
   }
+
+ 
 })

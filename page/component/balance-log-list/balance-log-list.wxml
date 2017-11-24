@@ -4,7 +4,13 @@
     <view class='box'>
       <!--header  -->
       <view class='flex header'>
-        <view class='flex-row lf'>{{cond.showDate}}</view>
+        <view class='flex-row lf'>
+        <view class='date'>{{cond.showDate}}</view>
+          <view class='balance'>
+            <text class='t1'>支出￥{{expenditure == null ? 0 : expenditure}}</text>
+            <text class='t2'>收入￥{{income == null ? 0 : income}}</text>
+          </view>
+        </view>
         <view class='flex-row rg'>
           <picker class='img' mode="date" value="{{cond.date}}" fields="month" start="{{cond.start}}" end="{{cond.end}}" bindchange="bindDateChange">
             <image src="/image/picker_icon.png" />
@@ -19,11 +25,18 @@
             <view class='flex-row lf'>
               <view class='flex top'>
                 <view class='flex-row text1'>{{balanceLog.refTypeName}}</view>
-                <view class='flex-row text2'>订单号：{{balanceLog.id}}</view>
+                <view class='flex-row text2'>流水号：{{balanceLog.id}}</view>
               </view>
               <view class='bottom'>{{balanceLog.addtime}}</view>
             </view>
-            <view class='flex-row flex flex-align-center flex-pack-end rg'>{{balanceLog.amount}}</view>
+            <!-- <view class='flex-row flex flex-align-center flex-pack-end rg'>{{balanceLog.amount}}</view> -->
+            <view class='flex-row rg'>
+              <view class="amout">{{balanceLog.amount}}</view>
+              <view class="balance">{{balanceLog.balanceAmount}}</view>
+            </view>
+            <view class='arrow flex-row flex flex-align-center'>
+              <image src='/image/right.png'></image>
+            </view>
           </navigator>
         </view>
       </view>

@@ -4,8 +4,8 @@
  * qa  appid=wx6196df0ee20f5fa3
  */
 
-//var server_host = "http://192.168.1.171:8081"; // dev
- var server_host = "http://101.132.177.151:8080"; // qa
+var server_host = "http://192.168.1.144:8081"; // dev
+//var server_host = "http://101.132.177.151:8080"; //qa
 //var server_host = "https://www.qrun360.com"; // pro
 
 var config = {
@@ -70,7 +70,7 @@ var config = {
     getBalanceLogsUrl: `${server_host}/api/driver/driverBalance/viewDriverBanlanceLogDataGrid`,
 
     // 账户明细详情
-    getBalanceLogDetailUrl: `${server_host}/api/driver/driverBalance/viewDeliverBanlanceLogDetial`,
+    getBalanceLogDetailUrl: `${server_host}/api/driver/driverBalance/viewDriverBanlanceLogDetial`,
 
     // 申请余额提现
     balanceCashUrl: `${server_host}/api/driver/driverBalance/updateWithdraw`,

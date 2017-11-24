@@ -55,6 +55,7 @@
           </view>
         </view> 
         <view class='bottoms'>
+          <view class='carry'>{{orderStatus}}<text wx:if="{{order.status=='DDSS20'}}">(注：今日收益为已送达订单的金额累加)</text></view>
           <view class='carry'>订单金额 <text>{{order.amount}}元</text></view>
         </view>
     </view>

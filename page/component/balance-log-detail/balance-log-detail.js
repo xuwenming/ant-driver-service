@@ -21,15 +21,16 @@ Page({
     self.setData({
       refType: options.refType
     })
-    if (options.refType == 'BT060' || options.refType == 'BT061') {
+    if (options.refType == 'BT150' || options.refType == 'BT151') {
       request.httpGet({
         url: config.getBalanceLogDetailUrl,
         data: { refId: options.refId, refType: options.refType },
         success: function (data) {
+          console.log(data)
           if (data.success) {
             data.obj.amount = Util.fenToYuan(data.obj.amount);
             data.obj.addtime = Util.format(new Date(data.obj.addtime.replace(/-/g, "/")), 'MM-dd HH:mm');
-            data.obj.distance = Util.distanceConvert(data.obj.distance);
+            // data.obj.distance = Util.distanceConvert(data.obj.deliverOrderShop.distance);
             self.setData({
               balanceDetail: data.obj
             });
@@ -54,5 +55,40 @@ Page({
     }
     
     
+  },
+  makePhoneCall: function (e) {
+    wx.makePhoneCall({
+      phoneNumber: e.currentTarget.dataset.phone,
+    })
+  },
+  openMap: function (e) {
+    var self = this,
+      latitude = e.currentTarget.dataset.latitude,
+      longitude = e.currentTarget.dataset.longitude;
+    //百度经纬度转火星经纬度
+    var mars_point = Util.baiduTomars(longitude, latitude);
+    if (!latitude || !longitude) {
+      wx.showModal({
+        content: '未知位置，无法规划路线！',
+        showCancel: false
+      });
+      return;
+    }
+    wx.getLocation({
+      success: function (res) {
+        wx.openLocation({
+          latitude: mars_point.lat,
+          longitude: mars_point.lng,
+          address: e.currentTarget.dataset.address
+        })
+      },
+      fail: function () {
+        app.getAuthorize({
+          scope: 'scope.userLocation',
+          content: '检测到您没打开定位权限，是否去设置打开？',
+          required: true // 必须授权
+        })
+      }
+    })
   }
 })

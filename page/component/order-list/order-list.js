@@ -83,7 +83,7 @@ Page({
         if (res.confirm) {
           request.httpPost({
             url: config.deliverOrderUrl,
-            data: { id: e.target.dataset.orderid },
+            data: { id: e.target.dataset.deliverordershopid},
             showLoading: true,
             success: function (data) {
               if (data.success) {
@@ -108,43 +108,52 @@ Page({
     });
 
   },
-
   // 送达完成
   orderComplete: function (e) {
     // 发送request处理订单
     var self = this;
-    wx.showModal({
-      title: '提示',
-      content: '是否确定订单号【' + e.target.dataset.deliverordershopid + '】已送达完成？',
-      success: function (res) {
-        if (res.confirm) {
-          request.httpPost({
-            url: config.completeOrderUrl,
-            data: { id: e.target.dataset.orderid },
-            showLoading: true,
-            success: function (data) {
-              if (data.success) {
-                wx.showToast({
-                  title: "送达完成",
-                  icon: 'success',
-                  mask: true,
-                  duration: 500,
-                  complete: function () {
-                    var orders = self.data.orders;
-                    orders.splice(e.target.dataset.index, 1);
-                    self.setData({
-                      orders: orders
-                    });
-                  }
-                })
-              }
-            }
-          })
-        }
-      }
-    });
+    wx.navigateTo({
+      url: '/page/component/order-complete/order-complete?orderId=' + e.target.dataset.orderId
+    })
 
   },
+
+  // // 送达完成
+  // orderComplete: function (e) {
+  //   // 发送request处理订单
+  //   var self = this;
+  //   wx.showModal({
+  //     title: '提示',
+  //     content: '是否确定订单号【' + e.target.dataset.deliverordershopid + '】已送达完成？',
+  //     success: function (res) {
+  //       if (res.confirm) {
+  //         request.httpPost({
+  //           url: config.completeOrderUrl,
+  //           data: { id: e.target.dataset.orderid },
+  //           showLoading: true,
+  //           success: function (data) {
+  //             if (data.success) {
+  //               wx.showToast({
+  //                 title: "送达完成",
+  //                 icon: 'success',
+  //                 mask: true,
+  //                 duration: 500,
+  //                 complete: function () {
+  //                   var orders = self.data.orders;
+  //                   orders.splice(e.target.dataset.index, 1);
+  //                   self.setData({
+  //                     orders: orders
+  //                   });
+  //                 }
+  //               })
+  //             }
+  //           }
+  //         })
+  //       }
+  //     }
+  //   });
+
+  // },
 
   /**
    * TODO 暂时没做翻页

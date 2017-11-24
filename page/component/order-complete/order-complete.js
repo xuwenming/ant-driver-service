@@ -94,7 +94,7 @@ Page({
         success: function (completeImages) {
           // console.log(completeImages);
           self.setData({
-            completeImages: completeImages
+          completeImages: completeImages
           });
           self.complete();
         }

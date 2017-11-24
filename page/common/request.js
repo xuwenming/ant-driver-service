@@ -102,7 +102,7 @@ function http(options) {
         return;
       }
       // 登录超时
-      if (res.data && !res.data.success && res.data.obj === 'token_expire') {
+      if (!options.noLogin && res.data && !res.data.success && res.data.obj === 'token_expire') {
         if (requestTimes == 3) return; // 尝试登陆不超过3次，防止死循环
         options.requestTimes = requestTimes + 1;
         login(function () {
