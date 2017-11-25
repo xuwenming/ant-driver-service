@@ -1,0 +1,82 @@
+<!--page/component/order-detail/order-detail.wxml-->
+<view class='container' wx:if="{{order != null}}">
+  <view class='content'>
+    <!-- list -->
+    <view class="order-list">
+      <!-- item -->
+      <view class='order-item'>
+          <view class='top line-after flex'>
+              <view class='flex-row flex flex-align-center'>              
+                <view class='flex flex-pack-end label'>订单号：{{order.id}}</view>
+              </view>
+              <view class='flex-row'>
+                <view class='flex flex-pack-end label'>下单时间：{{order.addtime}}</view>
+              </view>
+          </view>
+          <view class='flex info line-after-bl'>
+            <view class='flex-row icon'>
+              <image src='/image/address.png'></image>
+            </view>
+            <view class='flex-row rg'>
+             <view>门店：</view>
+              <view class='flex header'>
+                <view class='flex-row'><text> {{order.shop.contactPeople}}</text></view>
+                <view class='flex-row'bindtap='makePhoneCall' data-phone="{{order.shop.contactPhone}}"><text> {{order.shop.contactPhone}}</text></view>
+              </view>
+              <view class='address' bindtap="openMap" data-latitude="{{order.shop.latitude}}" data-longitude="{{order.shop.longitude}}" data-address="{{order.shop.address}}"><text>{{order.shop.address}}</text></view>
+            </view>
+          </view>
+          <view class='flex info line-after-bl'>
+          <view class='flex-row icon'>
+            <image src='/image/address.png'></image>
+          </view>
+          <view class='flex-row rg'>
+           <view>客户：</view>
+            <view class='flex header'>
+              <view class='flex-row'><text>{{order.deliverOrderShop.contactPeople}}</text></view>
+              <view class='flex-row' bindtap='makePhoneCall'data-phone="{{order.deliverOrderShop.contactPhone}}"><text> {{order.deliverOrderShop.contactPhone}}</text></view>
+              <view class='flex-row' wx:if="{{currentTab==0 ||currentTab==1}}"><text> {{order.deliverOrderShop.distance}}</text></view>
+            </view>
+            <view class='address' bindtap="openMap" data-latitude="{{order.deliverOrderShop.latitude}}" data-longitude="{{order.deliverOrderShop.longitude}}" data-address="{{order.deliverOrderShop.deliverAddress}}"><text>{{order.deliverOrderShop.deliverAddress}}</text></view>
+          </view>
+        </view>
+          <!-- goods list -->
+          <view class='flex order-goods line-after-bl' wx:for="{{order.deliverOrderShopItemList}}" wx:key="item.id" wx:for-item="item">
+            <view class='flex-row left'>
+              <image mode="center aspectFit" src="{{item.pictureUrl}}"></image>
+            </view>
+            <view class='flex-row right'>
+              <view class='name'>{{item.itemName}}</view>
+              <view class='bottom flex'>
+                <view class='flex-row'><text>{{item.quantityUnitName}}</text></view>
+                <view class='flex-row rg'>数量x<text>{{item.quantity}}</text></view>
+              </view>
+            </view>
+          </view> 
+          <view class='bottoms'>
+            <view class='carry flex'>
+              <view class='order-down flex-row flex flex-pack-start' wx:if="{{order.status == 'DDSS30'}}"><text>已结算</text></view>
+              <view class='flex-row'>订单金额 <text>{{order.amount}}元</text></view>
+            </view>
+          </view>
+      </view>    
+    </view>
+
+    <block wx:if="{{order.status == 'DDSS20' || order.status == 'DDSS30'}}">
+      <view class='box'>
+        <view class='header line-after'>用户签收</view>
+        <view class='upload' wx:if="{{order.completeImages != null}}">
+          <view class='item' wx:for="{{order.completeImages}}" wx:key="image" wx:for-item="image">
+            <image src="{{image}}" mode="center aspectFit" data-index="{{index}}" bindtap='showImage'/>
+          </view>
+        </view>
+        <view class='info' wx:else>无</view>
+      </view>
+
+      <view class='box'>
+        <view class='header line-after'>备注</view>
+        <view class='info'>{{order.completeRemark == null || order.completeRemark.length == 0 || order.completeRemark == 'null' ? '无' : order.completeRemark}}</view>
+      </view>
+    </block>
+  </view>
+</view>
