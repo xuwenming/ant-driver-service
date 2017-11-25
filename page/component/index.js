@@ -49,25 +49,15 @@ Page({
   },
   //更新骑手位置
   updateDriverLocation : function () {
-    if (!updateDriverLocation)
+    var self = this;
+    console.log("aaa")
+    if (!updateDriverLocation){
       updateDriverLocation = setInterval(function () {
-        wx.getLocation({
-          type: 'gcj02 ',
-          success: function (res) {
-            var baidu_point = Util.marsTobaidu(res.longitude, res.latitude);
-            request.httpPost({
-              url: config.updateLocation,
-              data: { longitude: '121.553894', latitude: '31.190966'},
-              success: function (data) {
-                if (data.success) {
-                console.log("更新位置成功！")
-                }
-              }
-            })
-          }
-
-        })
-      }, 5000);
+        console.log("bbb")
+        self.updateLocation();
+      }, 30000);
+    }
+    self.updateLocation();
 
   },
   onShow : function(){
@@ -77,7 +67,25 @@ Page({
   onPullDownRefresh: function () {
     wx.stopPullDownRefresh()
   },
+  updateLocation : function() {
+    wx.getLocation({
+      type: 'gcj02',
+      success: function (res) {
+        console.log(res)
+        var baidu_point = Util.marsTobaidu(res.longitude, res.latitude);
+        request.httpPost({
+          url: config.updateLocation,
+          data: { longitude: baidu_point.lng, latitude: baidu_point.lat },
+          success: function (data) {
+            if (data.success) {
+              console.log("更新位置成功！")
+            }
+          }
+        })
+      }
 
+    })
+  },
   getUserInfo : function() {
     var self = this;
     app.getAuthorize({

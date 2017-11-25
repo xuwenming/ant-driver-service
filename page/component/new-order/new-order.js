@@ -94,7 +94,7 @@ Page({
     var self = this;
     var orders = self.data.orders;
     wx.getLocation({
-      type: 'gcj02 ',
+      type: 'gcj02',
       success: function (res) {
         var baidu_point = Util.marsTobaidu(res.longitude, res.latitude);
         for (var i in orders) {
