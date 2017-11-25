@@ -83,7 +83,7 @@ Page({
         if (res.confirm) {
           request.httpPost({
             url: config.deliverOrderUrl,
-            data: { id: e.target.dataset.deliverordershopid},
+            data: { id: e.target.dataset.orderid},
             showLoading: true,
             success: function (data) {
               if (data.success) {
@@ -113,7 +113,7 @@ Page({
     // 发送request处理订单
     var self = this;
     wx.navigateTo({
-      url: '/page/component/order-complete/order-complete?orderId=' + e.target.dataset.orderId
+      url: '/page/component/order-complete/order-complete?orderId=' + e.target.dataset.orderid + '&deliverordershopid=' + e.target.dataset.deliverordershopid
     })
 
   },

@@ -45,10 +45,11 @@ Page({
     this.setData({ completeRemark: e.detail.value });
   },
 
-  chooseImage: function(){
+  chooseImage: function () {
     var self = this, tempFilePaths = this.data.tempFilePaths;
     wx.chooseImage({
-      count:3,
+      count: 3,
+      sizeType: ['compressed'],
       success: function (res) {
         tempFilePaths = tempFilePaths.concat(res.tempFilePaths);
         self.setData({
@@ -58,7 +59,7 @@ Page({
     })
   },
 
-  delImage : function(e){
+  delImage: function (e) {
     var tempFilePaths = this.data.tempFilePaths;
     tempFilePaths.splice(e.target.dataset.index, 1);
     this.setData({
@@ -66,11 +67,11 @@ Page({
     })
   },
 
-  showImage:function(e){
+  showImage: function (e) {
     var tempFilePaths = this.data.tempFilePaths;
     wx.previewImage({
-      current: tempFilePaths[e.target.dataset.index], 
-      urls: tempFilePaths 
+      current: tempFilePaths[e.target.dataset.index],
+      urls: tempFilePaths
     })
   },
 
@@ -87,6 +88,11 @@ Page({
     if (self.data.tempFilePaths.length == 0) {
       self.complete();
     } else {
+      wx.showLoading({
+        title: '上传中...',
+        mask: true
+      });
+
       app.uploadImage({
         url: config.uploadImageUrl,
         filePaths: this.data.tempFilePaths,
@@ -94,13 +100,14 @@ Page({
         success: function (completeImages) {
           // console.log(completeImages);
           self.setData({
-          completeImages: completeImages
+            completeImages: completeImages
           });
           self.complete();
         }
       });
     }
   },
+  
 
   complete: function (){
     var self = this;
@@ -111,7 +118,7 @@ Page({
         if (res.confirm) {
           request.httpPost({
             url: config.completeOrderUrl,
-            data: { id: self.data.orderId, completeImages: self.data.completeImages, completeRemark: self.data.completeRemark },
+            data: { id: self.data.orderId,  completeImages: self.data.completeImages || '', completeRemark: self.data.completeRemark || ''  },
             showLoading: true,
             success: function (data) {
               if (data.success) {
