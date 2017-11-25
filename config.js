@@ -82,7 +82,9 @@ var config = {
     getBaseDataByKeyUrl: `${server_host}/api/deliver/basedata/get`,
     
     //更新骑手位置信息
-    updateLocation:`${server_host}/api/driver/account/updateLocation`
+    updateLocation:`${server_host}/api/driver/account/updateLocation`,
+    //订单明细
+    getOrderDetailUrl: `${server_host}/api/driver/orderShop/getDetail`
     
 
 };

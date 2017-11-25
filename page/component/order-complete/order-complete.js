@@ -113,7 +113,7 @@ Page({
     var self = this;
     wx.showModal({
       title: '提示',
-      content: '是否确定订单号【' + self.data.deliverordershopid + '】已送达完成？',
+      content: '是否确定订单号【' + self.data.orderId + '】已送达完成？',
       success: function (res) {
         if (res.confirm) {
           request.httpPost({

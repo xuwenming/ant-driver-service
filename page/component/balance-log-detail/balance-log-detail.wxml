@@ -6,7 +6,7 @@
       <view class='order-item'>
           <view class='top line-after flex'>
               <view class='flex-row flex flex-align-center'>              
-                <view class='flex flex-pack-end label'>订单号：{{balanceDetail.deliverOrderShopId}}</view>
+                <view class='flex flex-pack-end label'>订单号：{{balanceDetail.id}}</view>
               </view>
               <view class='flex-row'>
                 <view class='flex flex-pack-end label'>下单时间：{{balanceDetail.addtime}}</view>
@@ -52,11 +52,29 @@
             </view>
           </view> 
           <view class='bottoms'>
+                          <view class='order-down flex-row flex carry ' wx:if="{{balanceDetail.status == 'DDSS30'}}"><text>已结算</text></view>
             <view class='carry'>订单金额 <text>{{balanceDetail.amount}}元</text></view>
           </view>
       </view>    
     </view>
+    <view wx:if="{{balanceDetail.status == 'DDSS20' || balanceDetail.status == 'DDSS30'}}">
+      <view class='box'>
+        <view class='header line-after'>用户签收</view>
+        <view class='upload' wx:if="{{order.completeImages != null}}">
+          <view class='item' wx:for="{{order.completeImages}}" wx:key="image" wx:for-item="image">
+            <image src="{{image}}" mode="center aspectFit" data-index="{{index}}" bindtap='showImage'/>
+          </view>
+        </view>
+        <view class='info' wx:else>无</view>
+      </view>
+
+      <view class='box'>
+        <view class='header line-after'>备注</view>
+        <view class='info'>{{order.completeRemark == null || order.completeRemark.length == 0 || order.completeRemark == 'null' ? '无' : order.completeRemark}}</view>
+      </view>
+    </view>
   </block>  
+  
 
   <block wx:else>
     <view class='box'>

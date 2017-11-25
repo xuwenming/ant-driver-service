@@ -23,6 +23,7 @@
               </view>
               <view class='bottom'>{{balanceLog.addtime}}</view>
             </view>
+             <view class='flex-row flex flex-align-center flex-pack-end rg'>{{balanceLog.handleStatusName}}</view>
             <view class='flex-row flex flex-align-center flex-pack-end rg'>{{balanceLog.amount}}</view>
           <!-- </navigator> -->
         </view>

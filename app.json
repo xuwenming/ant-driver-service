@@ -5,6 +5,7 @@
     "page/component/new-order/new-order",
     "page/component/order-list/order-list",
     "page/component/today-order-list/today-order-list",
+    "page/component/order-detail/order-detail",
     "page/component/driver-manage/driver-manage",
     "page/component/user/user",
     "page/component/protocol/protocol",
