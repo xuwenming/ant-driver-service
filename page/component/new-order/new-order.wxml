@@ -2,7 +2,7 @@
 <view class="container">
 
   <!-- list -->
-   <view class="order-list" wx:if="{{hasOrder}}"> 
+   <view class="order-list" wx:if="{{orders == null || orders.length > 0}}"> 
 
     <!-- item -->
     

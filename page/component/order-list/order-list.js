@@ -167,8 +167,8 @@ Page({
   getOrders: function (isRefresh) {
     var self = this, currentTab = this.data.currentTab, status;
     var url = config.getOrdersUrl;
-    if (currentTab == 0) status = 'DDSS05';
-    else if (currentTab == 1) status = 'DDSS10';
+    if (currentTab == 0) status = 'DDSS05,DDSS08';
+    else if (currentTab == 1) status = 'DDSS10,DDSS15';
     else if (currentTab == 2) status = 'DDSS20,DDSS30';
 
     // wx.showLoading({

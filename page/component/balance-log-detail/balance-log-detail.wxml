@@ -60,8 +60,8 @@
     <view wx:if="{{balanceDetail.status == 'DDSS20' || balanceDetail.status == 'DDSS30'}}">
       <view class='box'>
         <view class='header line-after'>用户签收</view>
-        <view class='upload' wx:if="{{order.completeImages != null}}">
-          <view class='item' wx:for="{{order.completeImages}}" wx:key="image" wx:for-item="image">
+        <view class='upload' wx:if="{{balanceDetail.completeImages != null}}">
+          <view class='item' wx:for="{{balanceDetail.completeImages}}" wx:key="image" wx:for-item="image">
             <image src="{{image}}" mode="center aspectFit" data-index="{{index}}" bindtap='showImage'/>
           </view>
         </view>
@@ -70,7 +70,7 @@
 
       <view class='box'>
         <view class='header line-after'>备注</view>
-        <view class='info'>{{order.completeRemark == null || order.completeRemark.length == 0 || order.completeRemark == 'null' ? '无' : order.completeRemark}}</view>
+        <view class='info'>{{balanceDetail.completeRemark == null || balanceDetail.completeRemark.length == 0 || balanceDetail.completeRemark == 'null' ? '无' : balanceDetail.completeRemark}}</view>
       </view>
     </view>
   </block>  

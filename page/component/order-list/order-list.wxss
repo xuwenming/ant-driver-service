@@ -199,7 +199,15 @@
 .order-list .bottoms button::after{
   border: 1px solid #fe9900;
 }
+.order-list .bottoms button[type=default] {
+  color: #aaa;
+  width:inherit;
+  background-color: inherit;
+}
 
+.order-list .bottoms button[type=default]::after{
+  border: 1px solid #aaa;
+}
 .order-list .bottoms button:first-child{
   color: #fe9900;
 }

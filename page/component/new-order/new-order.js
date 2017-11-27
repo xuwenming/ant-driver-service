@@ -14,7 +14,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    orders:true,
+    orders:null,
     hasMore: false,
     wxTimerList: {},
     hasOrder:false,
@@ -67,9 +67,9 @@ Page({
       success: function (data) {
         if (data.success) {
           if (data.obj.rows.length > 0) {
-            self.setData({
-              hasOrder:true
-            });
+            // self.setData({
+            //   hasOrder:true
+            // });
              self.voiceReminder();
           }
 
@@ -86,7 +86,7 @@ Page({
           });
           self.getDistance();
       
-        }
+        } 
       }
     })
   },
@@ -118,7 +118,9 @@ Page({
           request.httpPost({
             url: config.acceptOrderUrl,
             data: { id: e.target.dataset.orderId },
+            showLoading: true,
             success: function (data) {
+              console.log(data)
               if (data.success) {
                 var orders = self.data.orders;
                 orders.splice(e.target.dataset.index, 1);
@@ -136,6 +138,22 @@ Page({
                     }
                   }
                 });
+              } else {
+                wx.showModal({
+                  title:'提示',
+                  content:data.msg,
+                  image:'../../../image/sad.png',
+                  showCancel: false,
+                  success: function(res) {
+                    if(res.confirm) {
+                      var orders = self.data.orders;
+                      orders.splice(e.target.dataset.index, 1);
+                      self.setData({
+                        orders: orders
+                      });
+                    }
+                  }
+                })
               }
             }
           })

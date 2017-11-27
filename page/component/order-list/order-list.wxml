@@ -71,7 +71,8 @@
         <view class='bottoms'>
           <view class='carry'>订单金额 <text>{{order.amount}}元</text></view>
           <view>
-            <button data-deliverOrderShopId="{{order.deliverOrderShopId}}" data-orderId="{{order.id}}" data-index="{{order_idx}}" bindtap='orderDeliver' wx:if="{{order.status=='DDSS05'}}">发货</button> 
+          <button type="default" wx:if="{{currentTab == 0 && order.status=='DDSS05'}}">请到门店取货</button> 
+            <button data-deliverOrderShopId="{{order.deliverOrderShopId}}" data-orderId="{{order.id}}" data-index="{{order_idx}}" bindtap='orderDeliver' wx:if="{{order.status=='DDSS08'}}">发货</button> 
             <button data-deliverOrderShopId="{{order.deliverOrderShopId}}" data-orderId="{{order.id}}" data-index="{{order_idx}}"bindtap='orderComplete' wx:elif="{{order.status=='DDSS10'}}">送达完成</button>
           </view>
         </view>

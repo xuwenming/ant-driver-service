@@ -50,10 +50,8 @@ Page({
   //更新骑手位置
   updateDriverLocation : function () {
     var self = this;
-    console.log("aaa")
     if (!updateDriverLocation){
       updateDriverLocation = setInterval(function () {
-        console.log("bbb")
         self.updateLocation();
       }, 30000);
     }

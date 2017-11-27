@@ -31,6 +31,12 @@ Page({
             data.obj.amount = Util.fenToYuan(data.obj.amount);
             data.obj.addtime = Util.format(new Date(data.obj.addtime.replace(/-/g, "/")), 'MM-dd HH:mm');
             // data.obj.distance = Util.distanceConvert(data.obj.deliverOrderShop.distance);
+            var completeImages = data.obj.completeImages;
+            if (!Util.isEmpty(completeImages) && completeImages != 'null') {
+              data.obj.completeImages = completeImages.split(";");
+            } else {
+              data.obj.completeImages = null;
+            }
             self.setData({
               balanceDetail: data.obj
             });
@@ -90,5 +96,12 @@ Page({
         })
       }
     })
-  }
+  },
+  showImage: function (e) {
+    var completeImages = this.data.balanceDetail.completeImages;
+    wx.previewImage({
+      current: completeImages[e.target.dataset.index],
+      urls: completeImages
+    })
+  },
 })
