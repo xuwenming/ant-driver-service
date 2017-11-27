@@ -41,7 +41,7 @@
           </view>
         </view>
           <!-- goods list -->
-          <view class='flex order-goods line-after-bl' wx:for="{{order.deliverOrderShopItemList}}" wx:key="item.id" wx:for-item="item">
+          <view class='flex order-goods line-after-bl' wx:for="{{order.deliverOrderShop.deliverOrderShopItemList}}" wx:key="item.id" wx:for-item="item">
             <view class='flex-row left'>
               <image mode="center aspectFit" src="{{item.pictureUrl}}"></image>
             </view>
