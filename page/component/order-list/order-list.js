@@ -78,7 +78,7 @@ Page({
 
     wx.showModal({
       title: '提示',
-      content: '是否确定订单号【' + e.target.dataset.orderid + '】已发货？',
+      content: '是否确定订单号【' + e.target.dataset.deliverorderid + '】已发货？',
       success: function (res) {
         if (res.confirm) {
           request.httpPost({
@@ -111,9 +111,10 @@ Page({
   // 送达完成
   orderComplete: function (e) {
     // 发送request处理订单
+    console.log(e)
     var self = this;
     wx.navigateTo({
-      url: '/page/component/order-complete/order-complete?orderId=' + e.target.dataset.orderid + '&deliverordershopid=' + e.target.dataset.deliverordershopid
+      url: '/page/component/order-complete/order-complete?orderId=' + e.target.dataset.orderid + '&deliverorderid=' + e.target.dataset.deliverorderid
     })
 
   },

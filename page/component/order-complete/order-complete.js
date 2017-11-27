@@ -15,7 +15,7 @@ Page({
     completeImages:null,
     completeRemark:null,
     uploadRequired:true,
-    deliverordershopid:null
+    deliverorderid:null
   },
 
   /**
@@ -26,7 +26,7 @@ Page({
     console.log(options)
     self.setData({
       orderId: options.orderId,
-      deliverordershopid: options.deliverordershopid
+      deliverorderid: options.deliverorderid
     });
 
     // request.httpPost({
@@ -113,7 +113,7 @@ Page({
     var self = this;
     wx.showModal({
       title: '提示',
-      content: '是否确定订单号【' + self.data.orderId + '】已送达完成？',
+      content: '是否确定订单号【' + self.data.deliverorderid + '】已送达完成？',
       success: function (res) {
         if (res.confirm) {
           request.httpPost({

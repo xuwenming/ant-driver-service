@@ -21,7 +21,7 @@
     <view class='order-item' wx:for="{{orders}}" wx:for-index="order_idx" wx:key="id" wx:for-item="order">
         <view class='top line-after flex'>
             <view class='flex-row flex flex-align-center'>              
-              <view class='flex flex-pack-end label'>订单号：{{order.id}}</view>
+              <view class='flex flex-pack-end label'>订单号：{{order.deliverOrderShop.deliverOrderId}}</view>
             </view>
             <view class='flex-row'>
               <view class='flex flex-pack-end label'>下单时间：{{order.addtime}}</view>
@@ -73,8 +73,8 @@
           <view>
           <button type="default" wx:if="{{currentTab == 0 && order.status=='DDSS05'}}">请到门店取货</button> 
           <button type="default" wx:if="{{currentTab == 1 && order.status=='DDSS15'}}">等待门店确认</button> 
-            <button data-deliverOrderShopId="{{order.deliverOrderShopId}}" data-orderId="{{order.id}}" data-index="{{order_idx}}" bindtap='orderDeliver' wx:if="{{order.status=='DDSS08'}}">发货</button> 
-            <button data-deliverOrderShopId="{{order.deliverOrderShopId}}" data-orderId="{{order.id}}" data-index="{{order_idx}}"bindtap='orderComplete' wx:elif="{{order.status=='DDSS10'}}">送达完成</button>
+            <button data-deliverOrderId="{{order.deliverOrderShop.deliverOrderId}}" data-orderId="{{order.id}}" data-index="{{order_idx}}" bindtap='orderDeliver' wx:if="{{order.status=='DDSS08'}}">发货</button> 
+            <button data-deliverOrderId="{{order.deliverOrderShop.deliverOrderId}}" data-orderId="{{order.id}}" data-index="{{order_idx}}"bindtap='orderComplete' wx:elif="{{order.status=='DDSS10'}}">送达完成</button>
           </view>
         </view>
     </view>
