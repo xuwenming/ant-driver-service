@@ -11,7 +11,6 @@ Page({
    */
   data: {
     orders: null,
-    orderStatus:null,
     noDataMsg: '今日暂无有效订单哦~'
   },
 
@@ -53,7 +52,6 @@ Page({
           else orders = orders.concat(data.obj.rows);
           self.setData({
             orders: orders,
-            orderStatus: data.obj.rows.status == 'DDSS05' ? '待发货' : (data.obj.rows.status == 'DDSS10' ? '配送中' : '已送达')
            });
          }
           
