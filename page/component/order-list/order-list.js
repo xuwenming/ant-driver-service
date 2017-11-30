@@ -34,6 +34,7 @@ Page({
   onShow: function () {
     var self = this;
     wx.showNavigationBarLoading();
+    if (app.getPlatform() != 'ios') currPage = 1;
     self.getOrders(true);
     getDistanceInterval = setInterval(function () {
       self.getDistance(true);
@@ -43,7 +44,7 @@ Page({
         self.getOrders(true);
       }
     }, 5000);
-    if (app.getPlatform() != 'ios') currPage = 1;
+   
   },
   onHide: function() {
     if (getOrdersInterval) clearInterval(getOrdersInterval) ;

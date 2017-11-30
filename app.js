@@ -17,8 +17,9 @@ App({
       self.globalData.network = {
         isConnected: res.isConnected,
         networkType: res.networkType
-      }
-    })
+      }  
+    });
+    self.globalData.systemInfo = wx.getSystemInfoSync();
   },
   onShow: function () {
   },
@@ -33,7 +34,20 @@ App({
       networkType:'',
       latitude:null,
       longitude:null
-    }
+    },
+    systemInfo: null
+  },
+  getModel: function () { //获取手机型号
+    return this.globalData.systemInfo["model"]
+  },
+  getVersion: function () { //获取微信版本号
+    return this.globalData.systemInfo["version"]
+  },
+  getSystem: function () { //获取操作系统版本
+    return this.globalData.systemInfo["system"]
+  },
+  getPlatform: function () { //获取客户端平台
+    return this.globalData.systemInfo["platform"]
   },
   
   /**

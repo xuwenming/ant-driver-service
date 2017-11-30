@@ -43,7 +43,7 @@ Page({
     self.getNewOrders(true);
     getDistanceInterval = setInterval(function () {
       self.getDistance(true);
-    }, 5000);
+    }, 30000);
   },
   onHide:function(){
     if (newOrderIntervar) clearInterval(newOrderIntervar);
