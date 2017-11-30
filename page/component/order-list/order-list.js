@@ -33,6 +33,7 @@ Page({
    */
   onShow: function () {
     var self = this;
+    wx.showNavigationBarLoading();
     self.getOrders(true);
     getDistanceInterval = setInterval(function () {
       self.getDistance(true);
@@ -42,9 +43,13 @@ Page({
         self.getOrders(true);
       }
     }, 5000);
+    if (app.getPlatform() != 'ios') currPage = 1;
   },
   onHide: function() {
     if (getOrdersInterval) clearInterval(getOrdersInterval) ;
+  },
+  onUnload: function () {
+    if (getOrdersInterval) clearInterval(getOrdersInterval);
   },
   getDistance: function(){
     var self = this;
@@ -187,6 +192,7 @@ Page({
    */
   onPullDownRefresh: function () {
     currPage = 1;
+    wx.showNavigationBarLoading();
     this.getOrders(true);
     setTimeout(function () {
       wx.stopPullDownRefresh()
@@ -198,6 +204,7 @@ Page({
    */
   onReachBottom: function () {
     if (this.data.hasMore) {
+      wx.showNavigationBarLoading();
       this.getOrders();
     } else {
       // wx.showToast({
