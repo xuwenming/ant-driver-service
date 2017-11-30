@@ -1,12 +1,12 @@
 /**
  * 小程序配置文件
- * pro appid=wx0b54b1b16b700f4b
- * qa  appid=wx6196df0ee20f5fa3
+ * pro appid=wx7cfa5d0f69d854ee
+ * qa  appid=wx0d96de3cd604f954
  */
 
- var server_host = "http://192.168.1.158:8081"; // dev
-//var server_host = "http://101.132.177.151:8080"; //qa
-//var server_host = "https://www.qrun360.com"; // pro
+//  var server_host = "http://192.168.1.158:8081"; // dev
+var server_host = "http://101.132.177.151:8080"; //qa
+// var server_host = "https://www.qrun360.com"; // pro
 
 var config = {
 
