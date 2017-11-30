@@ -38,7 +38,7 @@ Page({
     self.getOrders(true);
     getDistanceInterval = setInterval(function () {
       self.getDistance(true);
-     }, 5000);
+     }, 30000);
     getOrdersInterval = setInterval(function () {
       if (self.data.currentTab != 2){
         self.getOrders(true);
