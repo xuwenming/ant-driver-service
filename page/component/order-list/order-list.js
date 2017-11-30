@@ -4,7 +4,7 @@ var config = require('../../../config');
 var request = require('../../common/request');
 var Util = require('../../../util/util').Util;
 
-var currPage = 1, rows = 10, getDistanceInterval, getOrdersIntervar;
+var currPage = 1, rows = 10, getDistanceInterval, getOrdersInterval;
 
 Page({
 
@@ -37,13 +37,14 @@ Page({
     getDistanceInterval = setInterval(function () {
       self.getDistance(true);
      }, 5000);
-    getOrdersIntervar = setInterval(function () {
-      if (self.data.currentTab == 2){
-      }else{
+    getOrdersInterval = setInterval(function () {
+      if (self.data.currentTab != 2){
         self.getOrders(true);
-        console.log("解决");
       }
     }, 5000);
+  },
+  onHide: function() {
+    if (getOrdersInterval) clearInterval(getOrdersInterval) ;
   },
   getDistance: function(){
     var self = this;
@@ -73,6 +74,7 @@ Page({
         orders: null
       })
       currPage = 1;
+      wx.showNavigationBarLoading();
       self.getOrders(true);
     }
   },
@@ -131,59 +133,21 @@ Page({
         url: '/page/component/order-detail/order-detail?orderId=' + e.currentTarget.dataset.orderId
       })
   },
-  // // 送达完成
-  // orderComplete: function (e) {
-  //   // 发送request处理订单
-  //   var self = this;
-  //   wx.showModal({
-  //     title: '提示',
-  //     content: '是否确定订单号【' + e.target.dataset.deliverordershopid + '】已送达完成？',
-  //     success: function (res) {
-  //       if (res.confirm) {
-  //         request.httpPost({
-  //           url: config.completeOrderUrl,
-  //           data: { id: e.target.dataset.orderid },
-  //           showLoading: true,
-  //           success: function (data) {
-  //             if (data.success) {
-  //               wx.showToast({
-  //                 title: "送达完成",
-  //                 icon: 'success',
-  //                 mask: true,
-  //                 duration: 500,
-  //                 complete: function () {
-  //                   var orders = self.data.orders;
-  //                   orders.splice(e.target.dataset.index, 1);
-  //                   self.setData({
-  //                     orders: orders
-  //                   });
-  //                 }
-  //               })
-  //             }
-  //           }
-  //         })
-  //       }
-  //     }
-  //   });
-
-  // },
 
   /**
    * TODO 暂时没做翻页
    * isRefresh:true=初始化或下拉刷新 false=上拉加载更多
    */
-  getOrders: function (isRefresh) {
+  getOrders: function (isRefresh) { 
     var self = this, currentTab = this.data.currentTab, status;
     var url = config.getOrdersUrl;
     if (currentTab == 0) status = 'DDSS05,DDSS08';
     else if (currentTab == 1) status = 'DDSS10,DDSS15';
     else if (currentTab == 2) status = 'DDSS20,DDSS30';
-
     // wx.showLoading({
     //   title: '努力加载中...',
     //   mask: true
     // })
-    wx.showNavigationBarLoading();
 
     request.httpGet({
       url: url,
