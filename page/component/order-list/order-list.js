@@ -4,7 +4,7 @@ var config = require('../../../config');
 var request = require('../../common/request');
 var Util = require('../../../util/util').Util;
 
-var currPage = 1, rows = 10, getDistanceInterval;
+var currPage = 1, rows = 10, getDistanceInterval, getOrdersIntervar;
 
 Page({
 
@@ -37,6 +37,13 @@ Page({
     getDistanceInterval = setInterval(function () {
       self.getDistance(true);
      }, 5000);
+    getOrdersIntervar = setInterval(function () {
+      if (self.data.currentTab == 2){
+      }else{
+        self.getOrders(true);
+        console.log("解决");
+      }
+    }, 5000);
   },
   getDistance: function(){
     var self = this;

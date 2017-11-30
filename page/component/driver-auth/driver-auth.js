@@ -31,13 +31,14 @@ Page({
       url: config.getAccountInfoUrl,
       success: function (data) {
         if (data.success && data.obj) {
+          console.log(data.obj.account.handleStatus)
           if (data.obj.account.handleStatus == 'DAHS02') {
             wx.switchTab({
               url: '/page/component/new-order/new-order'
             });
           } else {
             self.setData({
-              status: data.obj.status,
+              status: data.obj.account.handleStatus,
               driver: {
                 userName: data.obj.account.userName,
                 nickName: data.obj.account.nickName,

@@ -4,7 +4,7 @@
  * qa  appid=wx6196df0ee20f5fa3
  */
 
- var server_host = "http://192.168.1.168:8081"; // dev
+ var server_host = "http://192.168.1.166:8081"; // dev
 //var server_host = "http://101.132.177.151:8080"; //qa
 //var server_host = "https://www.qrun360.com"; // pro
 
@@ -71,6 +71,9 @@ var config = {
 
     // 账户明细详情
     getBalanceLogDetailUrl: `${server_host}/api/driver/driverBalance/viewDriverBanlanceLogDetial`,
+    
+    // 按月统计收入支出
+    totalBalanceByMonthlUrl: `${server_host}/api/driver/driverBalance/getTotalBalanceByMonth`,
 
     // 申请余额提现
     balanceCashUrl: `${server_host}/api/driver/driverBalance/updateWithdraw`,

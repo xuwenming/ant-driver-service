@@ -6,7 +6,7 @@
       <view class='order-item'>
           <view class='top line-after flex'>
               <view class='flex-row flex flex-align-center'>              
-                <view class='flex flex-pack-end label'>订单号：{{balanceDetail.id}}</view>
+                <view class='flex flex-pack-end label'>订单号：{{balanceDetail.deliverOrderShop.deliverOrderId}}</view>
               </view>
               <view class='flex-row'>
                 <view class='flex flex-pack-end label'>下单时间：{{balanceDetail.addtime}}</view>

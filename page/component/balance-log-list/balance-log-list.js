@@ -30,9 +30,26 @@ Page({
    */
   onLoad: function (options) {
     currPage = 1;
-    this.getBalanceLogs(true);
+    this.totalBalanceByMonth(true);
   },
-
+  totalBalanceByMonth: function () {
+    var self = this;
+    wx.showNavigationBarLoading();
+    request.httpGet({
+      url: config.totalBalanceByMonthlUrl,
+      data: { date: self.data.cond.date },
+      showLoading: true,
+      success: function (data) {
+        if (data.success) {
+          self.setData({
+            income: Util.fenToYuan(data.obj.income),
+            expenditure: Util.fenToYuan(-data.obj.expenditure)
+          });
+          self.getBalanceLogs(true);
+        }
+      }
+    })
+  },
   getBalanceLogs: function (isRefresh) {
     var self = this;
     // wx.showLoading({
@@ -72,16 +89,8 @@ Page({
           var balanceLogs = self.data.balanceLogs;
           if (isRefresh) balanceLogs = data.obj.rows;
           else balanceLogs = balanceLogs.concat(data.obj.rows);
-          var income = self.data.income;
-          var expenditure = self.data.expenditure;
-          if (data.obj.footer[0]!= null) {
-            income = data.obj.footer[0].amountIn;
-            expenditure = data.obj.footer[0].amountOut;
-          }
           self.setData({
-            balanceLogs: balanceLogs,
-            income: Util.fenToYuan(income),
-            expenditure: Util.fenToYuan(expenditure)
+            balanceLogs: balanceLogs
           });
         }
       }
