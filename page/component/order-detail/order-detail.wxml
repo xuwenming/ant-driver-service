@@ -20,7 +20,7 @@
             <view class='flex-row rg'>
              <view>门店：</view>
               <view class='flex header'>
-                <view class='flex-row'><text> {{order.shop.contactPeople}}</text></view>
+                <view class='flex-row'><text> {{order.shop.name}}</text></view>
                 <view class='flex-row'bindtap='makePhoneCall' data-phone="{{order.shop.contactPhone}}"><text> {{order.shop.contactPhone}}</text></view>
               </view>
               <view class='address' bindtap="openMap" data-latitude="{{order.shop.latitude}}" data-longitude="{{order.shop.longitude}}" data-address="{{order.shop.address}}"><text>{{order.shop.address}}</text></view>
@@ -55,7 +55,7 @@
           </view> 
           <view class='bottoms'>
             <view class='carry flex'>
-              <view class='order-down flex-row flex flex-pack-start' wx:if="{{order.status == 'DDSS30'}}"><text>已结算</text></view>
+              <view class='order-down flex-row flex flex-pack-start'><text>{{orderStatus}}</text></view>
               <view class='flex-row'>订单金额 <text>{{order.amount}}元</text></view>
             </view>
           </view>

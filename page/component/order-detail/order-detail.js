@@ -10,7 +10,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    order:null
+    order:null,
+    orderStatus:null
   },
 
   /**
@@ -34,9 +35,25 @@ Page({
           } else {
             data.obj.completeImages = null;
           }
+          var orderStatus = self.data.orderStatus;
+          if (data.obj.status == 'DDSS05') {
+            orderStatus = '请取货'
+          } else if (data.obj.status == 'DDSS08') {
+            orderStatus = '请发货'
+          } else if (data.obj.status == 'DDSS10') {
+            orderStatus = '发货中'
+          } else if (data.obj.status == 'DDSS15') {
+            orderStatus = '待确认送达'
+          } else if (data.obj.status == 'DDSS20') {
+            orderStatus = '送达完成'
+          } else if (data.obj.status == 'DDSS30') {
+            orderStatus = '已结算'
+          }
           self.setData({
-            order: data.obj
+            order: data.obj,
+            orderStatus: orderStatus
           });
+
         }
       }
     })

@@ -6,7 +6,7 @@ var Util = require('../../../util/util').Util;
 var timer = require('../../../util/wxTimer');
 
 
-var currPage = 1, rows = 10, newOrderIntervar, getDistanceInterval;
+var currPage = 1, rows = 10,time =true ,  newOrderIntervar, getDistanceInterval;
 
 Page({
 
@@ -16,6 +16,7 @@ Page({
   data: {
     orders:null,
     hasMore: false,
+    shopDistance: {}, 
     wxTimerList: {},
     hasOrder:false,
 
@@ -36,17 +37,19 @@ Page({
    */
   onShow: function () {
     var self = this;
+    time = true;
     newOrderIntervar = setInterval(function () {
      self.getNewOrders(true);
     }, 10000);
     wx.showNavigationBarLoading();
     self.getNewOrders(true);
     getDistanceInterval = setInterval(function () {
-      self.getDistance(true);
+      self.getDistance();
     }, 30000);
   },
   onHide:function(){
     if (newOrderIntervar) clearInterval(newOrderIntervar);
+    if (getDistanceInterval) clearInterval(getDistanceInterval);
   },
   onUnload:function(){
     if (newOrderIntervar) clearInterval(newOrderIntervar);
@@ -72,7 +75,6 @@ Page({
             // });
              self.voiceReminder();
           }
-
           for (var i=0; i<data.obj.rows.length; i++) {
             data.obj.rows[i].amount = Util.fenToYuan(data.obj.rows[i].amount);
             data.obj.rows[i].addtime = Util.format(new Date(data.obj.rows[i].addtime.replace(/-/g, "/")), 'MM-dd HH:mm');
@@ -84,28 +86,34 @@ Page({
           self.setData({
             orders: orders,
           });
-          self.getDistance();
-      
+          if (time){
+            self.getDistance(orders);
+             time=false;
+          }
+          
         } 
       }
     })
   },
-  getDistance: function () {
+  getDistance: function (orders) {
     var self = this;
-    var orders = self.data.orders;
+    orders = orders || self.data.orders;
+    var shopDistance = self.data.shopDistance;
+    if(orders && orders.length > 0){
     wx.getLocation({
       type: 'gcj02',
       success: function (res) {
         var baidu_point = Util.marsTobaidu(res.longitude, res.latitude);
         for (var i in orders) {
           var distance = Util.getDistance(baidu_point.lng, baidu_point.lat, orders[i].shop.longitude, orders[i].shop.latitude);
-          orders[i].shopDistance = Util.distanceConvert(distance);
+          shopDistance[orders[i].id] = Util.distanceConvert(distance);
         }
         self.setData({
-          orders: orders
+          shopDistance: shopDistance
         });
       },
     })
+    }
   },
   processOrder:function(e){
     // 发送request处理订单
@@ -190,21 +198,20 @@ Page({
   },
 
   voiceReminder: function(){
+    var self = this;
     request.httpGet({
       url: config.updateCountNewAllocationOrder,
       success: function (data) {
-       console.log("播放声音")
-       console.log(data)
         if (data.success && data.obj > 0) {
           request.httpGet({
             url: config.getBaseDataByKeyUrl,
             data: { key:'DSV300'},
             success: function (data) {
               if (data.success) {
-                console.log("播放")
                 wx.playBackgroundAudio({
                   dataUrl:data.obj.icon
                 })
+                self.getDistance();
               }
             }
           })

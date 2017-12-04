@@ -111,6 +111,11 @@ Page({
       url: '/page/component/today-order-list/today-order-list'
     })
   },
+  todayIncome: function () {
+    wx.navigateTo({
+      url: '/page/component/today-order-income/today-order-income'
+    })
+  },
   showAvatar: function () {
     var self = this;
     wx.previewImage({

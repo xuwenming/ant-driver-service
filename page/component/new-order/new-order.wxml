@@ -28,7 +28,7 @@
             <view class='flex header'>
               <view class='flex-row'><text>{{order.shop.name}}</text></view>
               <view class='flex-row' bindtap='makePhoneCall' data-phone="{{order.shop.contactPhone}}"><text>{{order.shop.contactPhone}}</text></view>
-              <view class='flex-row'><text>{{order.shopDistance}}</text></view>
+              <view class='flex-row'><text>{{shopDistance[order.id]}}</text></view>
             </view>
             <view class='address' bindtap="openMap" data-latitude="{{order.shop.latitude}}" data-longitude="{{order.shop.longitude}}" data-address="{{order.shop.address}}"><text>{{order.shop.address}}</text></view>
           </view>

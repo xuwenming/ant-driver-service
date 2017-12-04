@@ -5,6 +5,7 @@ var request = require('../../common/request');
 var Util = require('../../../util/util').Util;
 
 var currPage = 1, rows = 10, getDistanceInterval, getOrdersInterval;
+var time = true;
 
 Page({
 
@@ -15,10 +16,10 @@ Page({
     currentTab : 0,
     orders: null,
     hasMore: false,
-
+    shopDistance: {}, 
     noDataMsg:'没有相关订单哦~',
     lat: null,
-    long: null
+    long: null,
   },
 
   /**
@@ -33,11 +34,12 @@ Page({
    */
   onShow: function () {
     var self = this;
+    time = true;
     wx.showNavigationBarLoading();
     if (app.getPlatform() != 'ios') currPage = 1;
     self.getOrders(true);
     getDistanceInterval = setInterval(function () {
-      self.getDistance(true);
+      self.getDistance();
      }, 30000);
     getOrdersInterval = setInterval(function () {
       if (self.data.currentTab != 2){
@@ -48,26 +50,30 @@ Page({
   },
   onHide: function() {
     if (getOrdersInterval) clearInterval(getOrdersInterval) ;
+    if (getDistanceInterval) clearInterval(getDistanceInterval);
   },
   onUnload: function () {
     if (getOrdersInterval) clearInterval(getOrdersInterval);
   },
-  getDistance: function(){
+  getDistance: function(orders){
     var self = this;
-    var orders = self.data.orders;
+    orders = orders ||self.data.orders;
+    var shopDistance = self.data.shopDistance;
+    if (orders && orders.length > 0) {
     wx.getLocation({
-      type: 'gcj02 ',
+      type: 'gcj02',
       success: function (res) {
         var baidu_point = Util.marsTobaidu(res.longitude, res.latitude);
         for (var i in orders) {
           var distance = Util.getDistance(baidu_point.lng, baidu_point.lat, orders[i].shop.longitude, orders[i].shop.latitude);
-          orders[i].shopDistance = Util.distanceConvert(distance);
+          shopDistance[orders[i].id] = Util.distanceConvert(distance);
         }
         self.setData({
-          orders: orders
+          shopDistance: shopDistance,
         });
       },
     })
+    }
   },
   switchTab:function(e){
     var self = this;
@@ -134,7 +140,6 @@ Page({
 
   },
   viewDetail: function (e) {
-    if (this.data.currentTab == 2)
       wx.navigateTo({
         url: '/page/component/order-detail/order-detail?orderId=' + e.currentTarget.dataset.orderId
       })
@@ -147,6 +152,7 @@ Page({
   getOrders: function (isRefresh) { 
     var self = this, currentTab = this.data.currentTab, status;
     var url = config.getOrdersUrl;
+    
     if (currentTab == 0) status = 'DDSS05,DDSS08';
     else if (currentTab == 1) status = 'DDSS10,DDSS15';
     else if (currentTab == 2) status = 'DDSS20,DDSS30';
@@ -182,7 +188,11 @@ Page({
           self.setData({
             orders: orders
           });
-          self.getDistance();
+           if (time) {
+             self.getDistance(orders);
+             time = false;
+           }
+           
         }
       }
     })

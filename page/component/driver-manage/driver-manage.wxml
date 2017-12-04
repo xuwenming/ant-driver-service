@@ -16,7 +16,7 @@
           </view>
           <view class='name'>{{accountInfo.nickName}}</view>
         </view>
-        <view class='flex-row left' bindtap='todayOrders'>
+        <view class='flex-row left' bindtap='todayIncome'>
           <view class='h3'>￥{{accountInfo.turnover}}</view>
           <view class='p'>今日收益</view>
         </view>

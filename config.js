@@ -5,8 +5,8 @@
  */
 
 //  var server_host = "http://192.168.1.158:8081"; // dev
-var server_host = "http://101.132.177.151:8080"; //qa
-// var server_host = "https://www.qrun360.com"; // pro
+//var server_host = "http://101.132.177.151:8080"; //qa
+ var server_host = "https://www.qrun360.com"; // pro
 
 var config = {
 
@@ -39,6 +39,8 @@ var config = {
     getOrdersUrl: `${server_host}/api/driver/orderShop/dataGrid`,
     //获取今日有效订单
     getTodayOrdersUrl:`${server_host}/api/driver/orderShop/getTodayOrders`,
+    //获取今日营业额
+    getTodayOrdersIncome: `${server_host}/api/driver/orderShop/getTodayProfitOrders`,
     // 订单列表查询(取消)
     getRefusedOrdersUrl: `${server_host}/api/driver/deliverOrder/viewRefusedDataGrid`,
     // getOrdersUrl: `${server_host}/testData/orders.txt`,
