@@ -15,7 +15,8 @@ Page({
     completeImages:null,
     completeRemark:null,
     uploadRequired:true,
-    deliverorderid:null
+    deliverorderid:null,
+    Ordertype: null
   },
 
   /**
@@ -26,8 +27,15 @@ Page({
     console.log(options)
     self.setData({
       orderId: options.orderId,
-      deliverorderid: options.deliverorderid
+      deliverorderid: options.deliverorderid,
+      orderType: options.type
     });
+    if(self.data.orderType == 1){
+      wx.setNavigationBarTitle({
+        title: '退货拒收',
+      })
+    }
+    
 
     // request.httpPost({
     //   url: config.getShopApplyUrl,
@@ -111,19 +119,27 @@ Page({
 
   complete: function (){
     var self = this;
+    var msg = '已送达完成';
+    var url = config.completeOrderUrl;
+    var title = '送达完成';
+    if(self.data.orderType=1){
+      msg ='拒收';
+      url = config.refuseOrderUrl;
+      title ='已提交'
+    }
     wx.showModal({
       title: '提示',
-      content: '是否确定订单号【' + self.data.deliverorderid + '】已送达完成？',
+      content: '是否确定订单号【' + self.data.deliverorderid + '】'+ msg+'？',
       success: function (res) {
         if (res.confirm) {
           request.httpPost({
-            url: config.completeOrderUrl,
+            url: url,
             data: { id: self.data.orderId,  completeImages: self.data.completeImages || '', completeRemark: self.data.completeRemark || ''  },
             showLoading: true,
             success: function (data) {
               if (data.success) {
                 wx.showToast({
-                  title: "送达完成",
+                  title: title,
                   icon: 'success',
                   mask: true,
                   complete: function () {

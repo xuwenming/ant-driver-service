@@ -139,6 +139,15 @@ Page({
     })
 
   },
+  orderRefuse: function (e) {
+    // 发送request处理订单
+    console.log(e)
+    var self = this;
+    wx.navigateTo({
+      url: '/page/component/order-complete/order-complete?orderId=' + e.target.dataset.orderid + '&deliverorderid=' + e.target.dataset.deliverorderid + '&type=' + e.target.dataset.ordertype
+    })
+
+  },
   viewDetail: function (e) {
       wx.navigateTo({
         url: '/page/component/order-detail/order-detail?orderId=' + e.currentTarget.dataset.orderId

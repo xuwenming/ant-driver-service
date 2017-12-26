@@ -73,6 +73,7 @@ Page({
             // self.setData({
             //   hasOrder:true
             // });
+            console.log(data.obj)
              self.voiceReminder();
           }
           for (var i=0; i<data.obj.rows.length; i++) {

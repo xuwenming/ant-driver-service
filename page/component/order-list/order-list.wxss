@@ -200,13 +200,13 @@
   border: 1px solid #fe9900;
 }
 
-.order-list .bottoms button:first-child{
+ .order-list .bottoms button:first-child{
   color: #fe9900;
-}
+} 
 
 .order-list .bottoms button:last-child{
   background-color: #fe9900;
-  color: #fff;
+  color: #fff; 
   margin-left: 20rpx;
 }
 

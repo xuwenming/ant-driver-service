@@ -19,6 +19,14 @@
   <view class="order-list" wx:if="{{orders == null || orders.length > 0}}">
     <!-- item -->
     <view class='order-item' wx:for="{{orders}}" wx:for-index="order_idx" wx:key="id" wx:for-item="order">
+    <view class='top line-after flex'>
+        <view class='flex-row flex flex-align-center'>              
+          <view class='flex flex-pack-end label'>原订单号：{{order.deliverOrderShop.originalOrderId == null ? '无' : order.deliverOrderShop.originalOrderId}}</view>
+        </view>
+        <view class='flex-row'>
+          <view class='flex flex-pack-end label'>店铺：{{order.deliverOrderShop.originalShop == null ? '无' : order.deliverOrderShop.originalShop}}</view>
+        </view>
+      </view>
         <view class='top line-after flex'>
             <view class='flex-row flex flex-align-center'>              
               <view class='flex flex-pack-end label'>订单号：{{order.deliverOrderShop.deliverOrderId}}</view>
@@ -74,7 +82,8 @@
           <button type="default" wx:if="{{currentTab == 0 && order.status=='DDSS05'}}">请到门店取货</button> 
           <button type="default" wx:if="{{currentTab == 1 && order.status=='DDSS15'}}">等待门店确认</button> 
             <button data-deliverOrderId="{{order.deliverOrderShop.deliverOrderId}}" data-orderId="{{order.id}}" data-index="{{order_idx}}" bindtap='orderDeliver' wx:if="{{order.status=='DDSS08'}}">发货</button> 
-            <button data-deliverOrderId="{{order.deliverOrderShop.deliverOrderId}}" data-orderId="{{order.id}}" data-index="{{order_idx}}"bindtap='orderComplete' wx:elif="{{order.status=='DDSS10'}}">送达完成</button>
+             <button data-deliverOrderId="{{order.deliverOrderShop.deliverOrderId}}" data-orderId="{{order.id}}" data-index="{{order_idx}}"bindtap='orderRefuse' data-orderType="1" wx:if="{{currentTab==1}}">拒绝收货</button> 
+            <button data-deliverOrderId="{{order.deliverOrderShop.deliverOrderId}}" data-orderId="{{order.id}}" data-index="{{order_idx}}"bindtap='orderComplete' wx:if="{{order.status=='DDSS10'}}">送达完成</button>
           </view>
         </view>
     </view>

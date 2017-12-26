@@ -5,6 +5,14 @@
     <view class="order-list">
       <!-- item -->
       <view class='order-item'>
+     <view class='top line-after flex'>
+        <view class='flex-row flex flex-align-center'>              
+          <view class='flex flex-pack-end label'>原订单号：{{order.deliverOrderShop.originalOrderId == null ? '无' : order.deliverOrderShop.originalOrderId}}</view>
+        </view>
+        <view class='flex-row'>
+          <view class='flex flex-pack-end label'>店铺：{{order.deliverOrderShop.originalShop == null ? '无' : order.deliverOrderShop.originalShop}}</view>
+        </view>
+      </view>
           <view class='top line-after flex'>
               <view class='flex-row flex flex-align-center'>              
                 <view class='flex flex-pack-end label'>订单号：{{order.deliverOrderShop.deliverOrderId}}</view>
