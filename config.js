@@ -4,9 +4,9 @@
  * qa  appid=wx0d96de3cd604f954
  */
 
-//  var server_host = "http://192.168.1.158:8081"; // dev
-//var server_host = "http://101.132.177.151:8080"; //qa
- var server_host = "https://www.qrun360.com"; // pro
+//  var server_host = "http://192.168.1.140:8082"; // dev
+var server_host = "http://101.132.177.151:8080"; //qa
+// var server_host = "https://www.qrun360.com"; // pro
 
 var config = {
 
@@ -56,6 +56,9 @@ var config = {
 
     // 订单送达完成
     completeOrderUrl: `${server_host}/api/driver/orderShop/editOrderComplete`,
+
+    // 退货拒收
+    editRejectUrl: `${server_host}/api/driver/orderShop/editReject`,
 
     uploadImageUrl: `${server_host}/api/driver/orderShop/uploadImage`,
 

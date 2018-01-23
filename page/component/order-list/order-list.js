@@ -36,13 +36,14 @@ Page({
     var self = this;
     time = true;
     wx.showNavigationBarLoading();
-    if (app.getPlatform() != 'ios') currPage = 1;
+    currPage = 1;
     self.getOrders(true);
     getDistanceInterval = setInterval(function () {
       self.getDistance();
      }, 30000);
     getOrdersInterval = setInterval(function () {
       if (self.data.currentTab != 2){
+        currPage = 1;
         self.getOrders(true);
       }
     }, 5000);

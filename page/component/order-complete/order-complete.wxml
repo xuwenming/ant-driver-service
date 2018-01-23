@@ -22,8 +22,8 @@
       <view bindtap='cancel'>取消</view>
     </view>
     <view class='flex-row .btn-item'>
-      <view bindtap='orderComplete'wx:if="{{orderType!=1}}">确定送达</view>
-       <view bindtap='orderComplete'wx:if="{{orderType==1}}">退货拒收</view>
+      <view bindtap='orderComplete' wx:if="{{orderType == 1}}">退货拒收</view>
+      <view bindtap='orderComplete' wx:else>确定送达</view>
     </view>
   </view>
 

@@ -122,9 +122,9 @@ Page({
     var msg = '已送达完成';
     var url = config.completeOrderUrl;
     var title = '送达完成';
-    if(self.data.orderType=1){
-      msg ='拒收';
-      url = config.refuseOrderUrl;
+    if(self.data.orderType == 1){
+      msg ='退货拒收';
+      url = config.editRejectUrl;
       title ='已提交'
     }
     wx.showModal({

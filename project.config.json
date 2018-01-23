@@ -8,8 +8,8 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "1.7.2",
-	"appid": "wx7cfa5d0f69d854ee",
+	"libVersion": "1.9.1",
+	"appid": "wx0d96de3cd604f954",
 	"projectname": "ant-driver-service",
 	"miniprogramRoot": "./",
 	"condition": {
